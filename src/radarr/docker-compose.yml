@@ -4,6 +4,14 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 128M
+        reservations:
+          cpus: "0.25"
+          memory: 32M
     environment:
       - PUID=13002
       - PGID=13000
