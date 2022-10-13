@@ -43,10 +43,10 @@ echo "UID=$(id -u)" >> .env
 # Run Docker Compose to get all the required services up and running.
 # Uncomment the lines for the services you require.
 
-# docker-compose -f ./../src/sonarr/docker-compose.yml up -d          # Bring up Sonarr container
-# docker-compose -f ./../src/radarr/docker-compose.yml up -d          # Bring up Radarr container
-# docker-compose -f ./../src/lidarr/docker-compose.yml up -d          # Bring up Lidarr container
-# docker-compose -f ./../src/readarr/docker-compose.yml up -d         # Bring up Readarr container
-# docker-compose -f ./../src/prowlarr/docker-compose.yml up -d        # Bring up Prowlarr container
-# docker-compose -f ./../src/qbittorrent/docker-compose.yml up -d     # Bring up QBitTorrent container
-# docker-compose -f ./../src/jellyfin/docker-compose.yml up -d        # Bring up Jellyfin container
+# docker-compose -f ./src/sonarr/docker-compose.yml up -d          # Bring up Sonarr container
+# docker-compose -f ./src/radarr/docker-compose.yml up -d          # Bring up Radarr container
+# docker-compose -f ./src/lidarr/docker-compose.yml up -d          # Bring up Lidarr container
+# docker-compose -f ./src/readarr/docker-compose.yml up -d         # Bring up Readarr container
+# docker-compose -f ./src/prowlarr/docker-compose.yml up -d        # Bring up Prowlarr container
+# docker-compose -f ./src/qbittorrent/docker-compose.yml up -d     # Bring up QBitTorrent container
+# docker-compose -f ./src/jellyfin/docker-compose.yml up -d        # Bring up Jellyfin container
