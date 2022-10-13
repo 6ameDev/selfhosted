@@ -17,8 +17,8 @@ Featured applications:
 2. `docker-compose` should be installed.
 
 ### Steps
-1. Clone the repository to your preferred directory.
+1. Clone the repository to your preferred directory and `cd` into it.
 2. Create a `.env` file by running `$ cp .env.sample .env`.
 3. Set the variables in `.env` file as per your preferences.
 4. Take a look at the `bin/setup.sh` file, uncomment the `docker-compose` commands for the services you require.
-5. Run the command `./bin/setup.sh` as a superuser.
+5. Run the command `$ ./bin/setup.sh` as a superuser.

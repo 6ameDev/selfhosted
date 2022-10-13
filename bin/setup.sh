@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Load environment variables
+source ./.env
+
 # Make users and groups
 sudo useradd sonarr -u 13001
 sudo useradd radarr -u 13002
