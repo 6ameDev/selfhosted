@@ -1,0 +1,17 @@
+---
+version: "3.1"
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=13002
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DOCKER_CONFIG_DIR}/docker/radarr-config:/config
+      - ${DATA_DIR}/data:/data
+    ports:
+      - 7878:7878
+    restart: unless-stopped

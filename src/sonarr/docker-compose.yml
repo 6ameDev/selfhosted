@@ -1,0 +1,17 @@
+---
+version: "3.1"
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=13001
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DOCKER_CONFIG_DIR}/docker/sonarr-config:/config
+      - ${DATA_DIR}/data:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped

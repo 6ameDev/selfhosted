@@ -1,0 +1,17 @@
+---
+version: "3.1"
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=13003
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DOCKER_CONFIG_DIR}/docker/lidarr-config:/config
+      - ${DATA_DIR}/data:/data
+    ports:
+      - 8686:8686
+    restart: unless-stopped

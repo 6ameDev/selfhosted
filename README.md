@@ -1,0 +1,1 @@
+ChillArr is a project aimed at making it blazing fast to setup a Servarr application suite based mediacenter running on Docker.

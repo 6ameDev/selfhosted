@@ -1,0 +1,16 @@
+---
+version: "3.1"
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=13005
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DOCKER_CONFIG_DIR}/docker/prowlarr-config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
