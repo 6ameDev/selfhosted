@@ -4,6 +4,14 @@ services:
   readarr:
     image: lscr.io/linuxserver/readarr:develop
     container_name: readarr
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 128M
+        reservations:
+          cpus: "0.10"
+          memory: 2M
     environment:
       - PUID=13004
       - PGID=13000
