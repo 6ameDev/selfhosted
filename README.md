@@ -11,6 +11,11 @@ Featured applications:
 - [Jellyfin](https://jellyfin.org/) is the volunteer-built media solution that puts you in control of your media. Stream to any device from your own server, with no strings attached. Your media, your server, your way.
 
 ## Setup
+
+### Pre-requisites
+1. `docker` should be installed.
+2. `docker-compose` should be installed.
+
 1. Clone the repository to your preferred directory.
 2. Create a `.env` file by running `$ cp .env.sample .env`.
 3. Set the variables in `.env` file as per your preferences.
