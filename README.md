@@ -16,6 +16,7 @@ Featured applications:
 1. `docker` should be installed.
 2. `docker-compose` should be installed.
 
+### Steps
 1. Clone the repository to your preferred directory.
 2. Create a `.env` file by running `$ cp .env.sample .env`.
 3. Set the variables in `.env` file as per your preferences.
