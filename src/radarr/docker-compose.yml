@@ -11,7 +11,7 @@ services:
           memory: 128M
         reservations:
           cpus: "0.10"
-          memory: 2M
+          memory: 6M
     environment:
       - PUID=13002
       - PGID=13000
