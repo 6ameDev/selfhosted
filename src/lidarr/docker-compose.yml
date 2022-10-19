@@ -22,4 +22,10 @@ services:
       - ${DATA_DIR}/data:/data
     ports:
       - 8686:8686
+    networks:
+      - sharednetwork
     restart: unless-stopped
+
+networks:
+  sharednetwork:
+    name: media_center_network
