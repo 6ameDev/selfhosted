@@ -1,5 +1,5 @@
 ---
-version: "3.1"
+version: "3.5"
 services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -22,4 +22,10 @@ services:
       - ${DATA_DIR}/data:/data
     ports:
       - 8989:8989
+    networks:
+      - sharednetwork
     restart: unless-stopped
+
+networks:
+  sharednetwork:
+    name: media_center_network

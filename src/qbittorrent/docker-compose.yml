@@ -1,5 +1,5 @@
 ---
-version: "3.1"
+version: "3.5"
 services:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -25,4 +25,10 @@ services:
       - 8080:8080
       - 6881:6881
       - 6881:6881/udp
+    networks:
+      - sharednetwork
     restart: unless-stopped
+
+networks:
+  sharednetwork:
+    name: media_center_network
