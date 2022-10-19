@@ -20,5 +20,8 @@ Featured applications:
 1. Clone the repository to your preferred directory and `cd` into it.
 2. Create a `.env` file by running `$ cp .env.sample .env`.
 3. Set the variables in `.env` file as per your preferences.
-4. Take a look at the `bin/setup.sh` file, uncomment the `docker-compose` commands for the services you require.
-5. Run the command `$ ./bin/setup.sh` as a superuser.
+5. Run the command `$ ./bin/init.sh` as a superuser. This is a one-time setup, required to create the necessary directories, service users and grant them only the needed permissions.
+6. Run the command `$ ./bin/deploy.sh` as a superuser.
+
+### Updating service(s)
+1. Run the command `$ ./bin/deploy.sh` as a superuser.
