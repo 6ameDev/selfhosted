@@ -1,5 +1,5 @@
 ---
-version: "3.1"
+version: "3.5"
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:develop
@@ -21,4 +21,10 @@ services:
       - ${DOCKER_CONFIG_DIR}/docker/prowlarr-config:/config
     ports:
       - 9696:9696
+    networks:
+      - sharednetwork
     restart: unless-stopped
+
+networks:
+  sharednetwork:
+    name: media_center_network
