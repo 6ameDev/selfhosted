@@ -56,7 +56,7 @@ echo "UID=$(id -u)" >> .env
 # Run Docker Compose to get all the required services up and running.
 # Uncomment the lines for the services you require.
 
-# docker-compose \
+# docker-compose --compatibility \
 #     -f ./src/sonarr/docker-compose.yml \
 #     -f ./src/radarr/docker-compose.yml \
 #     -f ./src/lidarr/docker-compose.yml \
@@ -65,3 +65,6 @@ echo "UID=$(id -u)" >> .env
 #     -f ./src/qbittorrent/docker-compose.yml \
 #     -f ./src/jellyfin/docker-compose.yml \
 #     up -d
+
+# Clean up stale docker images
+docker image prune -f
