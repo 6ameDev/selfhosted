@@ -3,31 +3,35 @@
 # Load environment variables
 source ./.env
 
-# Pull latest docker images for all the required services.
-# Remove the lines for the services you do NOT require.
+# Compile options for the required services
+options=""
+if [ "$ENABLE_SONARR" = true ]; then
+    options="${options} -f ./src/sonarr/docker-compose.yml"
+fi
+if [ "$ENABLE_RADARR" = true ]; then
+    options="${options} -f ./src/radarr/docker-compose.yml"
+fi
+if [ "$ENABLE_LIDARR" = true ]; then
+    options="${options} -f ./src/lidarr/docker-compose.yml"
+fi
+if [ "$ENABLE_READARR" = true ]; then
+    options="${options} -f ./src/readarr/docker-compose.yml"
+fi
+if [ "$ENABLE_PROWLARR" = true ]; then
+    options="${options} -f ./src/prowlarr/docker-compose.yml"
+fi
+if [ "$ENABLE_QBITTORRENT" = true ]; then
+    options="${options} -f ./src/qbittorrent/docker-compose.yml"
+fi
+if [ "$ENABLE_JELLYFIN" = true ]; then
+    options="${options} -f ./src/jellyfin/docker-compose.yml"
+fi
 
-docker-compose \
-    -f ./src/sonarr/docker-compose.yml \
-    -f ./src/radarr/docker-compose.yml \
-    -f ./src/lidarr/docker-compose.yml \
-    -f ./src/readarr/docker-compose.yml \
-    -f ./src/prowlarr/docker-compose.yml \
-    -f ./src/qbittorrent/docker-compose.yml \
-    -f ./src/jellyfin/docker-compose.yml \
-    pull
+# Pull latest docker images for all the required services.
+docker-compose $options pull
 
 # Run Docker Compose to get all the required services up and running.
-# Remove the lines for the services you do NOT require.
-
-docker-compose --compatibility \
-    -f ./src/sonarr/docker-compose.yml \
-    -f ./src/radarr/docker-compose.yml \
-    -f ./src/lidarr/docker-compose.yml \
-    -f ./src/readarr/docker-compose.yml \
-    -f ./src/prowlarr/docker-compose.yml \
-    -f ./src/qbittorrent/docker-compose.yml \
-    -f ./src/jellyfin/docker-compose.yml \
-    up -d
+docker-compose --compatibility $options up -d
 
 # Clean up stale docker images
 docker image prune -f
