@@ -24,7 +24,7 @@ sudo usermod -a -G mediacenter qbittorrent
 sudo usermod -a -G mediacenter jellyfin
 
 # Make directories
-sudo mkdir -pv ${DOCKER_CONFIG_DIR}/docker/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent,jellyfin,portainer}-config
+sudo mkdir -pv ${DOCKER_CONFIG_DIR}/docker/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent,jellyfin,plex,portainer}-config
 sudo mkdir -pv ${DATA_DIR}/data/{torrents,media}/{tv,movies,music,books}
 
 # Set permissions

@@ -1,0 +1,25 @@
+---
+version: "3.5"
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 400M
+        reservations:
+          cpus: "0.10"
+          memory: 200M
+    network_mode: host
+    environment:
+      - PUID=${UID}
+      - PGID=13000
+      - UMASK=002
+      - VERSION=docker
+      - PLEX_CLAIM=${PLEX_CLAIM}
+    volumes:
+      - ${DOCKER_CONFIG_DIR}/docker/plex-config:/config
+      - ${DATA_DIR}/data/media:/data/media
+    restart: unless-stopped
