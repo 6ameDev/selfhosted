@@ -1,0 +1,28 @@
+---
+version: "3.5"
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    deploy:
+      resources:
+        limits:
+          cpus: "2.5"
+          memory: 512M
+        reservations:
+          cpus: "0.10"
+          memory: 6M
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DOCKER_CONFIG_DIR}/docker/portainer-config:/data
+    ports:
+      - 9000:9000
+    networks:
+      - network
+    restart: always
+
+networks:
+  network:
+    name: portainer_network

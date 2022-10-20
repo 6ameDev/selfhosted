@@ -26,6 +26,9 @@ fi
 if [ "$ENABLE_JELLYFIN" = true ]; then
     options="${options} -f ./src/jellyfin/docker-compose.yml"
 fi
+if [ "$ENABLE_PORTAINER" = true ]; then
+    options="${options} -f ./src/portainer/docker-compose.yml"
+fi
 
 # Pull latest docker images for all the required services.
 docker-compose $options pull
