@@ -26,6 +26,9 @@ fi
 if [ "$ENABLE_JELLYFIN" = true ]; then
     options="${options} -f ./src/jellyfin/docker-compose.yml"
 fi
+if [ "$ENABLE_PLEX" = true ]; then
+    options="${options} -f ./src/plex/docker-compose.yml"
+fi
 if [ "$ENABLE_PORTAINER" = true ]; then
     options="${options} -f ./src/portainer/docker-compose.yml"
 fi
