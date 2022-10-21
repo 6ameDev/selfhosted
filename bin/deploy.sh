@@ -2,6 +2,7 @@
 
 # Load environment variables
 source ./.env
+export $(xargs <.env)
 
 # Compile options for the required services
 options=""
@@ -34,10 +35,10 @@ if [ "$ENABLE_PORTAINER" = true ]; then
 fi
 
 # Pull latest docker images for all the required services.
-docker-compose $options pull
+docker compose $options pull
 
 # Run Docker Compose to get all the required services up and running.
-docker-compose --compatibility $options up -d
+docker compose --compatibility $options up -d
 
 # Clean up stale docker images
 docker image prune -f
