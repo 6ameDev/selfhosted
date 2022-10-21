@@ -13,8 +13,8 @@ services:
           cpus: "0.10"
           memory: 6M
     environment:
-      - PUID=13008
-      - PGID=13008
+      - PUID=13007
+      - PGID=13007
       - UMASK=002
     security_opt:
       - no-new-privileges:true

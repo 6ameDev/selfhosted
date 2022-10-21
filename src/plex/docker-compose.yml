@@ -7,11 +7,12 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "2.0"
+          cpus: "1.5"
           memory: 400M
         reservations:
           cpus: "0.10"
           memory: 100M
+    network_mode: host
     environment:
       - PUID=${UID}
       - PGID=13000
@@ -20,12 +21,4 @@ services:
     volumes:
       - ${DOCKER_CONFIG_DIR}/docker/plex-config:/config
       - ${DATA_DIR}/data/media:/data/media
-    ports:
-      - 32400:32400
-    networks:
-      - sharednetwork
     restart: unless-stopped
-
-networks:
-  sharednetwork:
-    name: media_center_network

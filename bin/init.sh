@@ -10,8 +10,7 @@ sudo useradd lidarr -u 13003
 sudo useradd readarr -u 13004
 sudo useradd prowlarr -u 13005
 sudo useradd qbittorrent -u 13006
-# sudo useradd jellyfin -u 13007 ;deprecated
-sudo useradd portainer -u 13008
+sudo useradd portainer -u 13007
 
 sudo groupadd mediacenter -g 13000
 
