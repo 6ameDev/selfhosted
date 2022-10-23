@@ -6,7 +6,7 @@ services:
     image: lscr.io/linuxserver/plex:latest
     env_file: .env
     deploy:
-      replicas: ${REPLICAS}
+      replicas: 2
       resources:
         limits:
           cpus: "0.75"
