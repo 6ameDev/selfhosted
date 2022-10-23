@@ -4,10 +4,10 @@
 source ./../../.env
 
 # Make directories
-sudo mkdir -pv ${APP_CONFIG_DIR}/plex
+sudo mkdir -pv ${APP_CONFIG_DIR}/jellyfin
 
 # Set permissions
-sudo chown -R $(id -u):mediacenter ${APP_CONFIG_DIR}/plex
+sudo chown -R $(id -u):mediacenter ${APP_CONFIG_DIR}/jellyfin
 
 # Export current user's id to UID environment variable
 echo "UID=$(id -u)" >> .env
