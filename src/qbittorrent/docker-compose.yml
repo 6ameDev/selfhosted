@@ -3,6 +3,7 @@ version: "3.5"
 services:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
+    env_file: ./../../.env
     container_name: qbittorrent
     deploy:
       resources:

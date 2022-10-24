@@ -3,6 +3,7 @@ version: "3.5"
 services:
   readarr:
     image: lscr.io/linuxserver/readarr:develop
+    env_file: ./../../.env
     container_name: readarr
     deploy:
       resources:

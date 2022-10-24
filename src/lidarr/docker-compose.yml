@@ -3,6 +3,7 @@ version: "3.5"
 services:
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
+    env_file: ./../../.env
     container_name: lidarr
     deploy:
       resources:

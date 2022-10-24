@@ -3,6 +3,7 @@ version: "3.5"
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
+    env_file: ./../../.env
     container_name: jellyfin
     deploy:
       resources:
