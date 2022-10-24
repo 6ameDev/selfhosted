@@ -18,8 +18,8 @@ services:
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_CONFIG_DIR}/docker/sonarr-config:/config
-      - ${DATA_DIR}/data:/data
+      - ${APP_CONFIG_DIR}/sonarr:/config
+      - ${STORAGE_DIR}:/data
     ports:
       - 8989:8989
     networks:

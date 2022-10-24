@@ -19,8 +19,8 @@ services:
       - TZ=${TIMEZONE}
       - WEBUI_PORT=8080
     volumes:
-      - ${DOCKER_CONFIG_DIR}/docker/qbittorrent-config:/config
-      - ${DATA_DIR}/data/torrents:/data/torrents
+      - ${APP_CONFIG_DIR}/qbittorrent:/config
+      - ${STORAGE_DIR}/torrents:/data/torrents
     ports:
       - 8080:8080
       - 6881:6881

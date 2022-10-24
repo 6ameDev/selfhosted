@@ -19,6 +19,6 @@ services:
       - VERSION=docker
       - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
-      - ${DOCKER_CONFIG_DIR}/docker/plex-config:/config
-      - ${DATA_DIR}/data/media:/data/media
+      - ${APP_CONFIG_DIR}/plex:/config
+      - ${STORAGE_DIR}/media:/data/media
     restart: unless-stopped

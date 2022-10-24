@@ -22,21 +22,23 @@ sudo usermod -a -G mediacenter prowlarr
 sudo usermod -a -G mediacenter qbittorrent
 
 # Make directories
-sudo mkdir -pv ${DOCKER_CONFIG_DIR}/docker/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent,jellyfin,plex,portainer}-config
-sudo mkdir -pv ${DATA_DIR}/data/{torrents,media}/{tv,movies,music,books}
+sudo mkdir -pv ${APP_CONFIG_DIR}/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent,jellyfin,plex,portainer}
+sudo mkdir -pv ${STORAGE_DIR}/{torrents,media}/{tv,movies,music,books}
 
 # Set permissions
-sudo chmod -R 775 ${DATA_DIR}/data/
-sudo chown -R $(id -u):mediacenter ${DATA_DIR}/data/
-sudo chown -R $(id -u):mediacenter ${DOCKER_CONFIG_DIR}/docker/jellyfin-config
-sudo chown -R $(id -u):mediacenter ${DOCKER_CONFIG_DIR}/docker/plex-config
-sudo chown -R sonarr:mediacenter ${DOCKER_CONFIG_DIR}/docker/sonarr-config
-sudo chown -R radarr:mediacenter ${DOCKER_CONFIG_DIR}/docker/radarr-config
-sudo chown -R lidarr:mediacenter ${DOCKER_CONFIG_DIR}/docker/lidarr-config
-sudo chown -R readarr:mediacenter ${DOCKER_CONFIG_DIR}/docker/readarr-config
-sudo chown -R prowlarr:mediacenter ${DOCKER_CONFIG_DIR}/docker/prowlarr-config
-sudo chown -R qbittorrent:mediacenter ${DOCKER_CONFIG_DIR}/docker/qbittorrent-config
-sudo chown -R portainer:portainer ${DOCKER_CONFIG_DIR}/docker/portainer-config
+sudo chmod -R 775 ${STORAGE_DIR}/torrents/
+sudo chmod -R 775 ${STORAGE_DIR}/media/
+sudo chown -R $(id -u):mediacenter ${STORAGE_DIR}/torrents/
+sudo chown -R $(id -u):mediacenter ${STORAGE_DIR}/media/
+sudo chown -R $(id -u):mediacenter ${APP_CONFIG_DIR}/jellyfin
+sudo chown -R $(id -u):mediacenter ${APP_CONFIG_DIR}/plex
+sudo chown -R sonarr:mediacenter ${APP_CONFIG_DIR}/sonarr
+sudo chown -R radarr:mediacenter ${APP_CONFIG_DIR}/radarr
+sudo chown -R lidarr:mediacenter ${APP_CONFIG_DIR}/lidarr
+sudo chown -R readarr:mediacenter ${APP_CONFIG_DIR}/readarr
+sudo chown -R prowlarr:mediacenter ${APP_CONFIG_DIR}/prowlarr
+sudo chown -R qbittorrent:mediacenter ${APP_CONFIG_DIR}/qbittorrent
+sudo chown -R portainer:portainer ${APP_CONFIG_DIR}/portainer
 
 # Export current user's id to UID environment variable
 echo "UID=$(id -u)" >> .env

@@ -2,7 +2,6 @@
 
 # Load environment variables
 source ./.env
-export $(xargs <.env)
 
 # Compile options for the required services
 options=""

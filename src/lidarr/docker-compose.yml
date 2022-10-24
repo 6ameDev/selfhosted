@@ -18,8 +18,8 @@ services:
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_CONFIG_DIR}/docker/lidarr-config:/config
-      - ${DATA_DIR}/data:/data
+      - ${APP_CONFIG_DIR}/lidarr:/config
+      - ${STORAGE_DIR}:/data
     ports:
       - 8686:8686
     networks:

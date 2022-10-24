@@ -18,8 +18,8 @@ services:
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_CONFIG_DIR}/docker/radarr-config:/config
-      - ${DATA_DIR}/data:/data
+      - ${APP_CONFIG_DIR}/radarr:/config
+      - ${STORAGE_DIR}:/data
     ports:
       - 7878:7878
     networks:

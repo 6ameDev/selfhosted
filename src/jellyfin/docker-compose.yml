@@ -18,8 +18,8 @@ services:
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_CONFIG_DIR}/docker/jellyfin-config:/config
-      - ${DATA_DIR}/data/media:/data/media
+      - ${APP_CONFIG_DIR}/jellyfin:/config
+      - ${STORAGE_DIR}/media:/data/media
     ports:
       - 8096:8096
       - 8920:8920
