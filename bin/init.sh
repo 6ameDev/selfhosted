@@ -22,7 +22,7 @@ sudo usermod -a -G mediacenter prowlarr
 sudo usermod -a -G mediacenter qbittorrent
 
 # Make directories
-sudo mkdir -pv ${APP_CONFIG_DIR}/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent,jellyfin,plex,portainer}
+sudo mkdir -pv ${APP_CONFIG_DIR}/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent,jellyfin,plex,portainer,pihole,nginx}
 sudo mkdir -pv ${STORAGE_DIR}/{torrents,media}/{tv,movies,music,books}
 
 # Set permissions
@@ -39,6 +39,9 @@ sudo chown -R readarr:mediacenter ${APP_CONFIG_DIR}/readarr
 sudo chown -R prowlarr:mediacenter ${APP_CONFIG_DIR}/prowlarr
 sudo chown -R qbittorrent:mediacenter ${APP_CONFIG_DIR}/qbittorrent
 sudo chown -R portainer:portainer ${APP_CONFIG_DIR}/portainer
+
+sudo chown -R $(id -u):$(id -u) ${APP_CONFIG_DIR}/pihole
+sudo chown -R $(id -u):$(id -u) ${APP_CONFIG_DIR}/nginx
 
 # Export current user's id to UID environment variable
 echo "UID=$(id -u)" >> .env
