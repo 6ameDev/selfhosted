@@ -9,7 +9,7 @@ services:
       - PGID=1000
       - TZ=Asia/Calcutta
     volumes:
-      - </path/to/appdata/config>:/config
+      - ${APP_CONFIG_DIR}/nginx:/config
     ports:
       - 80:80
       - 443:443
