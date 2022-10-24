@@ -16,6 +16,8 @@ Featured applications:
 1. `docker` should be installed.
 2. `docker-compose` should be installed.
 
+Note: Ensure you have added your user to docker group. To do so you can run `sudo usermod -aG docker ${USER}`
+
 ### Steps
 1. Clone the repository to your preferred directory and `cd` into it.
 2. Create a `.env` file by running `$ cp .env.sample .env`.
