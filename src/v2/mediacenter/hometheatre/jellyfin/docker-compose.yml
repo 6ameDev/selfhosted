@@ -1,18 +1,17 @@
----
 version: "3.5"
 services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
-    env_file: ./../../.env
+    env_file: .env
     container_name: jellyfin
     deploy:
       resources:
         limits:
-          cpus: "2.5"
-          memory: 512M
+          cpus: "1.5"
+          memory: 1G
         reservations:
           cpus: "0.10"
-          memory: 300M
+          memory: 400M
     environment:
       - PUID=${UID}
       - PGID=13000
