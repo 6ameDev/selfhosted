@@ -12,5 +12,11 @@ sudo mkdir -pv ${APP_CONFIG_DIR}/portainer
 # Set permissions
 sudo chown -R portainer:portainer ${APP_CONFIG_DIR}/portainer
 
-# Deploy docker container
-docker compose up -d
+# Pull latest docker images for all the required services.
+docker compose pull
+
+# Run Docker Compose to get all the required services up and running.
+docker compose --compatibility up -d
+
+# Clean up stale docker images
+docker image prune -f
