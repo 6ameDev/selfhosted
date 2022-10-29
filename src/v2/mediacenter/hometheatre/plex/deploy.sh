@@ -12,5 +12,8 @@ sudo chown -R $(id -u):mediacenter ${APP_CONFIG_DIR}/plex
 # Export current user's id to UID environment variable
 echo "UID=$(id -u)" >> .env
 
+# Deploy docker container
+# docker compose up -d
+
 # Deploy docker stack hometheatre based on plex
-docker stack deploy -c docker-compose-stack.yml hometheatre
+# docker stack deploy -c docker-compose-stack.yml hometheatre
