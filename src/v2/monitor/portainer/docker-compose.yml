@@ -1,21 +1,19 @@
----
 version: "3.5"
 services:
   portainer:
     image: portainer/portainer-ce:latest
-    env_file: ./../../.env
     container_name: portainer
     deploy:
       resources:
         limits:
-          cpus: "2.5"
-          memory: 512M
+          cpus: "0.75"
+          memory: 256M
         reservations:
           cpus: "0.10"
-          memory: 6M
+          memory: 128M
     environment:
-      - PUID=13007
-      - PGID=13007
+      - PUID=13200
+      - PGID=13200
       - UMASK=002
     security_opt:
       - no-new-privileges:true
