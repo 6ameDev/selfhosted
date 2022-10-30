@@ -1,0 +1,13 @@
+[Unit]
+Description=Call the Duplicity backup script each day
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=3600
+Unit=duplicity.service
+
+[Install]
+WantedBy=timers.target

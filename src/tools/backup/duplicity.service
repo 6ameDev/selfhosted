@@ -1,0 +1,14 @@
+[Unit]
+Description=Execute the Duplicity backup script
+
+[Service]
+Type=simple
+ExecStart=/opt/backup.sh
+TimeoutSec=3600
+TimeoutStartSec=3600
+TimeoutStopSec=3600
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=default.target
