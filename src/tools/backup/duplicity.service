@@ -3,6 +3,7 @@ Description=Execute the Duplicity backup script
 
 [Service]
 Type=simple
+User=<YOUR-SYSTEM-USER>
 ExecStart=/opt/backup.sh
 TimeoutSec=3600
 TimeoutStartSec=3600

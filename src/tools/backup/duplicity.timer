@@ -1,12 +1,12 @@
 [Unit]
-Description=Call the Duplicity backup script each day
+Description=Call the Duplicity backup script every hour
 RefuseManualStart=no
 RefuseManualStop=no
 
 [Timer]
-OnCalendar=daily
+OnCalendar=*-*-* *:00:00
 Persistent=true
-RandomizedDelaySec=3600
+RandomizedDelaySec=900
 Unit=duplicity.service
 
 [Install]
