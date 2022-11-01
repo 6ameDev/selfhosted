@@ -1,33 +1,22 @@
-version: "3.5"
+version: '2'
 services:
-  changed:
-    image: lscr.io/linuxserver/changedetection.io:latest
-    container_name: changed
-    deploy:
-      resources:
-        limits:
-          memory: 256M
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io
+    container_name: changedetection
+    hostname: changedetection
+    volumes:
+      - /var/data/tmp/config/changed:/datastore
     environment:
+      - PORT=5000
       - PUID=1000
       - PGID=1000
-      - TZ=${TIMEZONE}
-      - WEBDRIVER_URL=http://browser-chrome:4444/wd/hub
-    volumes:
-      - /var/data/tmp/config/changed:/config
+      - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/
+      - BASE_URL=https://google.com
+    restart: unless-stopped
     ports:
       - 5000:5000
-    restart: unless-stopped
 
-  browser-chrome:
-      hostname: browser-chrome
-      image: selenium/standalone-chrome-debug:3.141.59
-      environment:
-          - VNC_NO_PASSWORD=1
-          - SCREEN_WIDTH=1920
-          - SCREEN_HEIGHT=1080
-          - SCREEN_DEPTH=24
-      volumes:
-          # Workaround to avoid the browser crashing inside a docker container
-          # See https://github.com/SeleniumHQ/docker-selenium#quick-start
-          - /dev/shm:/dev/shm
-      restart: unless-stopped
+  playwright-chrome:
+    hostname: playwright-chrome
+    image: browserless/chrome
+    restart: unless-stopped
