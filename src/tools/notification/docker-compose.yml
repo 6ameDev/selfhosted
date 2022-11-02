@@ -9,7 +9,7 @@ services:
       - PGID=1000
       - TZ=${TIMEZONE}
     volumes:
-      - /var/data/tmp/config/apprise:/config
+      - ${APP_CONFIG_DIR}/apprise:/config
     ports:
       - 8000:8000
     restart: unless-stopped
