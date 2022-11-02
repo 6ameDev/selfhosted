@@ -5,7 +5,7 @@ services:
     container_name: changedetection
     hostname: changedetection
     volumes:
-      - /var/data/tmp/config/changed:/datastore
+      - ${APP_CONFIG_DIR}/changed:/datastore
     environment:
       - PORT=5000
       - PUID=1000
