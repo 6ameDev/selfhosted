@@ -1,0 +1,34 @@
+version: '2'
+services:
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    volumes:
+      - ${APP_CONFIG_DIR}/nextcloud:/var/www/html
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - 8080:80
+    networks:
+      - sharednetwork
+    restart: unless-stopped
+
+  postgres:
+    image: postgres
+    env_file:
+      - .env
+    container_name: postgres
+    volumes:
+      - ${APP_CONFIG_DIR}/postgres:/var/lib/postgresql/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - sharednetwork
+    restart: unless-stopped
+
+networks:
+  sharednetwork:
+    name: nextcloud_network
