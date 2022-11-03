@@ -2,6 +2,7 @@
 
 # Load base environment variables
 source ./../.env
+source ./.env
 
 # Make directories
 sudo mkdir -pv ${APP_CONFIG_DIR}/nextcloud/{main,apps,config,theme}
