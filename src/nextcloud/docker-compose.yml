@@ -47,6 +47,10 @@ services:
     container_name: nextcloud_cron
     volumes:
       - ${APP_CONFIG_DIR}/nextcloud/main:/var/www/html
+      - ${APP_CONFIG_DIR}/nextcloud/apps:/var/www/html/custom_apps
+      - ${APP_CONFIG_DIR}/nextcloud/config:/var/www/html/config
+      - ${APP_CONFIG_DIR}/nextcloud/theme:/var/www/html/themes/icloud
+      - ${DATA_DIR}:/var/www/html/data
     entrypoint: /cron.sh
     networks:
       - sharednetwork
