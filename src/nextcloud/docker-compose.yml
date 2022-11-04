@@ -1,36 +1,18 @@
 version: '3.5'
 
 services:
-  # db:
-  #   image: lscr.io/linuxserver/mariadb:10.5.17-alpine
-  #   container_name: db
-  #   restart: always
-  #   command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-  #   env_file: .env
-  #   volumes:
-  #     - ${APP_CONFIG_DIR}/mariadb:/config
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=${TIMEZONE}
-  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-  #     - MYSQL_DATABASE=nextcloud
-  #     - MYSQL_USER=nextcloud
-  #   ports:
-  #     - 3306:3306
-
   postgres:
     image: postgres:14
-    env_file:
-      - .env
     container_name: postgres
+    env_file: .env
     volumes:
       - ${APP_CONFIG_DIR}/postgres:/var/lib/postgresql/data
     environment:
       - PUID=1000
       - PGID=1000
-      - POSTGRES_PASSWORD=testpassword
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     networks:
       - sharednetwork
     restart: unless-stopped
@@ -38,10 +20,7 @@ services:
   app:
     image: nextcloud
     container_name: nextcloud
-    restart: always
     env_file: .env
-    ports:
-      - 8080:80
     volumes:
       - ${APP_CONFIG_DIR}/nextcloud/main:/var/www/html
       - ${APP_CONFIG_DIR}/nextcloud/apps:/var/www/html/custom_apps
@@ -51,18 +30,17 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      # - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      # - MYSQL_DATABASE=nextcloud
-      # - MYSQL_USER=${MYSQL_USER}
-      # - MYSQL_HOST=db
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=testpassword
       - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
       - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+    ports:
+      - 8080:80
     networks:
       - sharednetwork
+    restart: always
 
 networks:
   sharednetwork:
