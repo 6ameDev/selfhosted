@@ -42,6 +42,16 @@ services:
       - sharednetwork
     restart: always
 
+  cron:
+    image: nextcloud
+    container_name: nextcloud_cron
+    volumes:
+      - ${APP_CONFIG_DIR}/nextcloud/main:/var/www/html
+    entrypoint: /cron.sh
+    networks:
+      - sharednetwork
+    restart: always
+
 networks:
   sharednetwork:
     name: nextcloud_network
