@@ -20,6 +20,8 @@ services:
   app:
     image: nextcloud
     container_name: nextcloud
+    depends_on:
+      - postgres
     env_file: .env
     volumes:
       - ${APP_CONFIG_DIR}/nextcloud/main:/var/www/html
@@ -45,6 +47,9 @@ services:
   cron:
     image: nextcloud
     container_name: nextcloud_cron
+    depends_on:
+      - postgres
+    env_file: .env
     volumes:
       - ${APP_CONFIG_DIR}/nextcloud/main:/var/www/html
       - ${APP_CONFIG_DIR}/nextcloud/apps:/var/www/html/custom_apps
