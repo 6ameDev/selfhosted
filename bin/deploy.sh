@@ -3,8 +3,7 @@
 # Load base environment variables
 source ./.env
 
-# Pull latest docker images for all the required services.
-docker compose pull
+
 
 # Deploy individual stacks
 if [ "$MEDIACENTER" != 'None' ]; then
@@ -19,6 +18,3 @@ fi
 if [ "$ENABLE_PORTAINER" = true ]; then
     ./bin/deploy_portainer.sh
 fi
-
-# Clean up stale docker images
-docker image prune -f
