@@ -18,3 +18,6 @@ fi
 if [ "$ENABLE_PORTAINER" = true ]; then
     ./bin/deploy_portainer.sh
 fi
+
+# Clean up stale docker images
+docker image prune -f
