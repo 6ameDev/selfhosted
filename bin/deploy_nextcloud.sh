@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Load base environment variables
+source ./.env
+
 echo "DATA DIR: ${DATA_DIR}"
 
 ## Make directories
