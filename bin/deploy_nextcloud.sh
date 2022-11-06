@@ -3,8 +3,6 @@
 # Load base environment variables
 source ./.env
 
-echo "DATA DIR: ${DATA_DIR}"
-
 ## Make directories
 sudo mkdir -pv ${APP_CONFIG_DIR}/nextcloud/{main,apps,config,theme}
 sudo mkdir -pv ${APP_CONFIG_DIR}/postgres

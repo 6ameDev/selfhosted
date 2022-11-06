@@ -3,8 +3,6 @@
 # Load base environment variables
 source ./.env
 
-echo "DATA DIR: ${DATA_DIR}"
-
 # Deploy individual stacks
 if [ "$MEDIACENTER" != 'None' ]; then
     ./bin/deploy_mediacenter.sh

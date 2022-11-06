@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load base environment variables
-source .env
+source ./.env
 
 # Make users and groups
 sudo groupadd mediacenter -g 13000
