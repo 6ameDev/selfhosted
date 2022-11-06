@@ -16,8 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Create environment file
-      #   run: cp .env.sample .env
+      - name: Create environment file
+        run: cp .env.sample .env
 
-      # - name: Run deploy script
-      #   run: ./deploy.sh
+      - name: Run deploy script
+        run: ./bin/deploy.sh
