@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "App Config Dir: ${APP_CONFIG_DIR}"
-
 # Make users and groups
 sudo useradd portainer -u 13200
 
