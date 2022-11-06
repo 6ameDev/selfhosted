@@ -12,8 +12,10 @@ sudo chown -R www-data:$(id -u) ${DATA_DIR}
 # 999 is the postgres user
 sudo chown -R 999:$(id -u) ${APP_CONFIG_DIR}/postgres
 
-## Pull latest docker images for all the required services.
-docker compose pull
+compose_file_path=src/nextcloud/docker-compose.yml
 
-## Run Docker Compose to get all the required services up and running.
-docker compose --compatibility up -d
+# Pull latest docker images for all the required services.
+docker compose -f $compose_file_path pull
+
+# Run Docker Compose to get all the required services up and running.
+docker compose --compatibility -f $compose_file_path up -d
