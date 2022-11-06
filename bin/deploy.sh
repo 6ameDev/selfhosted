@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Load base environment variables
+source ./.env
 source ./../.env
 
 # Pull latest docker images for all the required services.
