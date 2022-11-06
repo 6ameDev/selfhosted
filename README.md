@@ -1,4 +1,6 @@
 # SelfHosted
+[![Deploy](https://github.com/6ameDev/selfhosted/actions/workflows/deploy.yml/badge.svg)](https://github.com/6ameDev/selfhosted/actions/workflows/deploy.yml)
+
 This is a home server setup and primarily uses docker to containerize most of the applications. The application data is encrypted and backed up to a cloud storage.
 
 Some of the use-cases covered in this project are:
