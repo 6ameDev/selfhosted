@@ -41,10 +41,10 @@ sudo chown -R $(id -u):mediacenter ${APP_CONFIG_DIR}/jellyfin
 echo "UID=$(id -u)" >> .env
 
 # Pull latest docker images for all the required services.
-docker compose pull
+docker compose --env-file .env pull
 
 # Run Docker Compose to get all the required services up and running.
-docker compose --compatibility up -d
+docker compose --compatibility --env-file .env up -d
 
 ## PLEX
 # Make directories
@@ -57,7 +57,7 @@ sudo chown -R $(id -u):mediacenter ${APP_CONFIG_DIR}/plex
 echo "UID=$(id -u)" >> .env
 
 # Pull latest docker images for all the required services.
-docker compose pull
+docker compose --env-file .env pull
 
 # Run Docker Compose to get all the required services up and running.
-docker compose --compatibility up -d
+docker compose --compatibility --env-file .env up -d

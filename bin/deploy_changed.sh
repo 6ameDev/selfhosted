@@ -16,7 +16,7 @@ docker compose --compatibility -f $compose_file_path up -d
 compose_file_path=src/tools/notification/docker-compose.yml
 
 # Pull latest docker images for all the required services.
-docker compose -f $compose_file_path pull
+docker compose -f $compose_file_path --env-file .env pull
 
 # Run Docker Compose to get all the required services up and running.
-docker compose --compatibility -f $compose_file_path up -d
+docker compose --compatibility -f $compose_file_path --env-file .env up -d
