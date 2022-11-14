@@ -1,0 +1,29 @@
+version: '3.5'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      - DB_MYSQL_HOST: "db"
+      - DB_MYSQL_PORT: 3306
+      - DB_MYSQL_USER: ${MYSQL_USER}
+      - DB_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      - DB_MYSQL_NAME: ${MYSQL_DATABASE}
+      - DISABLE_IPV6: 'true'
+    volumes:
+      - ${APP_CONFIG_DIR}/nginx-proxy-manager:/data
+      - ${APP_CONFIG_DIR}/letsencrypt:/etc/letsencrypt
+    restart: unless-stopped
+
+  db:
+    image: 'yobasystems/alpine-mariadb:arm32v7'
+    environment:
+      - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE: ${MYSQL_DATABASE}
+      - MYSQL_USER: ${MYSQL_USER}
+      - MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ${APP_CONFIG_DIR}/mariadb:/var/lib/mysql
