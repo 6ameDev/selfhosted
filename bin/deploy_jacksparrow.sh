@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Load base environment variables
-source ./../.env
 source ./.env
 
 # Make users and groups
@@ -41,29 +40,26 @@ sudo chown -R qbittorrent:mediacenter ${APP_CONFIG_DIR}/qbittorrent
 # Compile options for the required services
 options=""
 if [ "$ENABLE_SONARR" = true ]; then
-    options="${options} -f ./sonarr/docker-compose.yml"
+    options="${options} -f src/mediacenter/jacksparrow/sonarr/docker-compose.yml"
 fi
 if [ "$ENABLE_RADARR" = true ]; then
-    options="${options} -f ./radarr/docker-compose.yml"
+    options="${options} -f src/mediacenter/jacksparrow/radarr/docker-compose.yml"
 fi
 if [ "$ENABLE_LIDARR" = true ]; then
-    options="${options} -f ./lidarr/docker-compose.yml"
+    options="${options} -f src/mediacenter/jacksparrow/lidarr/docker-compose.yml"
 fi
 if [ "$ENABLE_READARR" = true ]; then
-    options="${options} -f ./readarr/docker-compose.yml"
+    options="${options} -f src/mediacenter/jacksparrow/readarr/docker-compose.yml"
 fi
 if [ "$ENABLE_PROWLARR" = true ]; then
-    options="${options} -f ./prowlarr/docker-compose.yml"
+    options="${options} -f src/mediacenter/jacksparrow/prowlarr/docker-compose.yml"
 fi
 if [ "$ENABLE_QBITTORRENT" = true ]; then
-    options="${options} -f ./qbittorrent/docker-compose.yml"
+    options="${options} -f src/mediacenter/jacksparrow/qbittorrent/docker-compose.yml"
 fi
 
 # Pull latest docker images for all the required services.
-docker compose $options pull
+docker compose $options --env-file .env pull
 
 # Run Docker Compose to get all the required services up and running.
-docker compose --compatibility $options up -d
-
-# Clean up stale docker images
-docker image prune -f
+docker compose --compatibility $options --env-file .env up -d
