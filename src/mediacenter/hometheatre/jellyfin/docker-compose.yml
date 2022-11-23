@@ -16,6 +16,7 @@ services:
       - PGID=13000
       - UMASK=002
       - TZ=${TIMEZONE}
+      - JELLYFIN_PublishedServerUrl=http://${HOST_IP}:8096
     volumes:
       - ${APP_CONFIG_DIR}/jellyfin:/config
       - ${STORAGE_DIR}/media:/data/media

@@ -12,6 +12,11 @@ source ./.env
 ## JELLYFIN
 ###########
 
+# Export host machine's IP to environment variable
+hostIp=$(hostname -I | cut -d ' ' -f1)
+echo "Adding host ip ${hostIp} to env file"
+echo "HOST_IP=${hostIp}" >> .env
+
 # Make directories
 sudo mkdir -pv ${APP_CONFIG_DIR}/jellyfin
 
