@@ -3,6 +3,7 @@ services:
   portainer:
     image: cloudflare/cloudflared:latest
     container_name: cloudflared
+    command: tunnel --config /home/nonroot/.cloudflared/config.yml run aa932b6b-6a56-43d5-ad45-bad1c7c2acf7
     volumes:
       - ${APP_CONFIG_DIR}/cloudflared:/home/nonroot/.cloudflared/
     networks:
