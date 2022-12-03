@@ -7,7 +7,7 @@ source ./.env
 sudo mkdir -pv ${APP_CONFIG_DIR}/cloudflared
 
 # Set permissions
-# sudo chown -R portainer:portainer ${APP_CONFIG_DIR}/portainer
+sudo chown -R 65532:65532 ${APP_CONFIG_DIR}/cloudflared
 
 compose_file_path=src/tools/tunnel/docker-compose.yml
 
