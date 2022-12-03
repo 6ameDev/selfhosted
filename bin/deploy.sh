@@ -16,6 +16,9 @@ fi
 if [ "$ENABLE_NGINX_PROXY_MANAGER" = true ]; then
     ./bin/deploy_nginx_proxy_manager.sh
 fi
+if [ "$ENABLE_TUNNEL" = true ]; then
+    ./bin/deploy_tunnel.sh
+fi
 if [ "$ENABLE_PORTAINER" = true ]; then
     ./bin/deploy_portainer.sh
 fi

@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+  portainer:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel run ${TUNNEL_UUID_OR_NAME}
+    volumes:
+      - ${APP_CONFIG_DIR}/cloudflared:/home/nonroot/.cloudflared/
+    networks:
+      - network
+    restart: unless-stopped
+
+networks:
+  network:
+    name: tunnel
