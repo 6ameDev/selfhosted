@@ -3,14 +3,6 @@ services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
-    deploy:
-      resources:
-        limits:
-          cpus: "1.5"
-          memory: 1G
-        reservations:
-          cpus: "0.10"
-          memory: 400M
     environment:
       - PUID=${UID}
       - PGID=13000

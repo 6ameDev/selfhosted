@@ -4,14 +4,6 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:develop
     container_name: prowlarr
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 128M
-        reservations:
-          cpus: "0.10"
-          memory: 6M
     environment:
       - PUID=13005
       - PGID=13000

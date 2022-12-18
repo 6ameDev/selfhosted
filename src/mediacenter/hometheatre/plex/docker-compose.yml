@@ -3,14 +3,6 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 400M
-        reservations:
-          cpus: "0.10"
-          memory: 100M
     network_mode: host
     environment:
       - PUID=${UID}
