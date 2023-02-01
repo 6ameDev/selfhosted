@@ -11,11 +11,19 @@ services:
       - PUID=1000
       - PGID=1000
       - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/
-    restart: unless-stopped
     ports:
       - 5000:5000
+    networks:
+      - sharednetwork
+    restart: unless-stopped
 
   playwright-chrome:
     hostname: playwright-chrome
     image: browserless/chrome
+    networks:
+      - sharednetwork
     restart: unless-stopped
+
+networks:
+  sharednetwork:
+    name: tunnel
