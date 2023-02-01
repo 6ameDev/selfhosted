@@ -4,15 +4,15 @@
 source ./.env
 
 # Make users and groups
-sudo groupadd mediacenter -g 13000
+sudo groupadd mediacenter -g 13000 &>/dev/null
 
-sudo useradd sonarr -u 13001
-sudo useradd radarr -u 13002
-sudo useradd lidarr -u 13003
-sudo useradd readarr -u 13004
-sudo useradd prowlarr -u 13005
+sudo useradd sonarr -u 13001 &>/dev/null
+sudo useradd radarr -u 13002 &>/dev/null
+sudo useradd lidarr -u 13003 &>/dev/null
+sudo useradd readarr -u 13004 &>/dev/null
+sudo useradd prowlarr -u 13005 &>/dev/null
 
-sudo useradd qbittorrent -u 13100
+sudo useradd qbittorrent -u 13100 &>/dev/null
 
 sudo usermod -a -G mediacenter sonarr
 sudo usermod -a -G mediacenter radarr
