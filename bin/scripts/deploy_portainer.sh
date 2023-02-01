@@ -4,7 +4,7 @@
 source ./.env
 
 # Make users and groups
-sudo useradd portainer -u 13200
+sudo useradd portainer -u 13200 &>/dev/null
 
 # Make directories
 sudo mkdir -pv ${APP_CONFIG_DIR}/portainer
