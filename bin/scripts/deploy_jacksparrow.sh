@@ -22,7 +22,7 @@ sudo usermod -a -G mediacenter prowlarr
 sudo usermod -a -G mediacenter qbittorrent
 
 # Make directories
-sudo mkdir -pv ${APP_CONFIG_DIR}/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent}
+sudo mkdir -pv ${APP_CONFIG_DIR}/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent,hotio-qbittorrent}
 sudo mkdir -pv ${STORAGE_DIR}/{torrents,media}/{tv,movies,music,books}
 
 # Set permissions
@@ -36,6 +36,7 @@ sudo chown -R lidarr:mediacenter ${APP_CONFIG_DIR}/lidarr
 sudo chown -R readarr:mediacenter ${APP_CONFIG_DIR}/readarr
 sudo chown -R prowlarr:mediacenter ${APP_CONFIG_DIR}/prowlarr
 sudo chown -R qbittorrent:mediacenter ${APP_CONFIG_DIR}/qbittorrent
+sudo chown -R qbittorrent:mediacenter ${APP_CONFIG_DIR}/hotio-qbittorrent
 
 # Compile options for the required services
 options=""

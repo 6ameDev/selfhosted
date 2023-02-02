@@ -21,6 +21,19 @@ services:
       - sharednetwork
     restart: unless-stopped
 
+  hotio-qbittorrent:
+    image: cr.hotio.dev/hotio/qbittorrent:release
+    container_name: hotio-qbittorrent
+    ports:
+      - "8081:8080"
+    environment:
+      - PUID=13006
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${APP_CONFIG_DIR}/hotio-qbittorrent:/config
+
 networks:
   sharednetwork:
     name: media_center_network
