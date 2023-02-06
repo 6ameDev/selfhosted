@@ -7,6 +7,9 @@ source ./.env
 if [ "$MEDIACENTER" != 'None' ]; then
     ./bin/scripts/deploy_mediacenter.sh
 fi
+if [ "$ENABLE_GHOSTFOLIO" = true ]; then
+    ./bin/scripts/deploy_ghostfolio.sh
+fi
 if [ "$ENABLE_NEXTCLOUD" = true ]; then
     ./bin/scripts/deploy_nextcloud.sh
 fi
@@ -22,6 +25,9 @@ fi
 if [ "$ENABLE_PORTAINER" = true ]; then
     ./bin/scripts/deploy_portainer.sh
 fi
+
+# Deploy Data Stores
+./bin/scripts/deploy_datastores.sh
 
 # Clean up stale docker images
 docker image prune -f
