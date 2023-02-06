@@ -10,7 +10,7 @@ sudo mkdir -pv ${APP_CONFIG_DIR}/postgres/{init,config}
 sudo chown -R 999:$(id -u) ${APP_CONFIG_DIR}/postgres
 
 # Copy over the db_init.sh script
-cp src/datastores/postgres/db_init.sh ${APP_CONFIG_DIR}/postgres/init/db_init.sh
+sudo cp src/datastores/postgres/db_init.sh ${APP_CONFIG_DIR}/postgres/init/db_init.sh
 
 compose_file_path=src/datastores/postgres/docker-compose.yml
 
