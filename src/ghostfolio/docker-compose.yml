@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  ghostfolio:
+    image: ghostfolio/ghostfolio:latest
+    container_name: ghostfolio_app
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_URL: postgresql://${GHOSTFOLIO_POSTGRES_USER}:${GHOSTFOLIO_POSTGRES_PASS}@ghostfolio_db:5432/${GHOSTFOLIO_POSTGRES_DB}?sslmode=prefer
+      NODE_ENV: production
+      REDIS_HOST: 'ghostfolio_cache'
+      REDIS_PASSWORD: ${GHOSTFOLIO_REDIS_PASS}
+      ACCESS_TOKEN_SALT: ${GHOSTFOLIO_ACCESS_TOKEN_SALT}
+      JWT_SECRET_KEY: ${GHOSTFOLIO_JWT_SECRET_KEY}
+    ports:
+      - 3333:3333
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:12
+    container_name: ghostfolio_db
+    volumes:
+      - ${APP_CONFIG_DIR}/ghostfolio/postgres:/var/lib/postgresql/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - POSTGRES_DB=${GHOSTFOLIO_POSTGRES_DB}
+      - POSTGRES_USER=${GHOSTFOLIO_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${GHOSTFOLIO_POSTGRES_PASS}
+    restart: unless-stopped
+
+  redis:
+    image: 'redis:alpine'
+    container_name: ghostfolio_cache
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass "$${GHOSTFOLIO_REDIS_PASS}"
+    restart: unless-stopped

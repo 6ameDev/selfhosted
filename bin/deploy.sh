@@ -7,6 +7,9 @@ source ./.env
 if [ "$MEDIACENTER" != 'None' ]; then
     ./bin/scripts/deploy_mediacenter.sh
 fi
+if [ "$ENABLE_GHOSTFOLIO" = true ]; then
+    ./bin/scripts/deploy_ghostfolio.sh
+fi
 if [ "$ENABLE_NEXTCLOUD" = true ]; then
     ./bin/scripts/deploy_nextcloud.sh
 fi
