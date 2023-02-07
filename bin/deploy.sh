@@ -26,8 +26,5 @@ if [ "$ENABLE_PORTAINER" = true ]; then
     ./bin/scripts/deploy_portainer.sh
 fi
 
-# Deploy Data Stores
-./bin/scripts/deploy_datastores.sh
-
 # Clean up stale docker images
 docker image prune -f
