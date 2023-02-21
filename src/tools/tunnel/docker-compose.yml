@@ -2,7 +2,7 @@ version: "3.5"
 services:
   primary:
     image: cloudflare/cloudflared:latest
-    container_name: primary-tunnel
+    container_name: tunnel_primary
     command: tunnel run ${PRIMARY_TUNNEL_NAME}
     volumes:
       - ${APP_CONFIG_DIR}/tunnel/primary:/home/nonroot/.cloudflared/
@@ -13,7 +13,7 @@ services:
 
   secondary:
     image: cloudflare/cloudflared:latest
-    container_name: secondary-tunnel
+    container_name: tunnel_secondary
     command: tunnel run ${SECONDARY_TUNNEL_NAME}
     volumes:
       - ${APP_CONFIG_DIR}/tunnel/secondary:/home/nonroot/.cloudflared/
