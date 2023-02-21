@@ -7,7 +7,8 @@ services:
     volumes:
       - ${APP_CONFIG_DIR}/tunnel/primary:/home/nonroot/.cloudflared/
     networks:
-      - network
+      - primary
+      - secondary
     restart: unless-stopped
 
   secondary:
@@ -17,7 +18,8 @@ services:
     volumes:
       - ${APP_CONFIG_DIR}/tunnel/secondary:/home/nonroot/.cloudflared/
     networks:
-      - network
+      - primary
+      - secondary
     restart: unless-stopped
 
 networks:
