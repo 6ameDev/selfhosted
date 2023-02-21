@@ -1,15 +1,27 @@
 version: "3.5"
 services:
-  portainer:
+  primary:
     image: cloudflare/cloudflared:latest
-    container_name: cloudflared
-    command: tunnel run ${TUNNEL_UUID_OR_NAME}
+    container_name: primary-tunnel
+    command: tunnel run ${PRIMARY_TUNNEL_NAME}
     volumes:
-      - ${APP_CONFIG_DIR}/cloudflared:/home/nonroot/.cloudflared/
+      - ${APP_CONFIG_DIR}/tunnel/primary:/home/nonroot/.cloudflared/
+    networks:
+      - network
+    restart: unless-stopped
+
+  secondary:
+    image: cloudflare/cloudflared:latest
+    container_name: secondary-tunnel
+    command: tunnel run ${SECONDARY_TUNNEL_NAME}
+    volumes:
+      - ${APP_CONFIG_DIR}/tunnel/secondary:/home/nonroot/.cloudflared/
     networks:
       - network
     restart: unless-stopped
 
 networks:
-  network:
-    name: tunnel
+  primary:
+    name: primary-tunnel
+  secondary:
+    name: secondary-tunnel

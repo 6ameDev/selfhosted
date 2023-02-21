@@ -18,9 +18,12 @@ services:
       - 7359:7359/udp
       - 1900:1900/udp
     networks:
-      - sharednetwork
+      - primary-tunnel
+      - secondary-tunnel
     restart: unless-stopped
 
 networks:
-  sharednetwork:
-    name: tunnel
+  primary-tunnel:
+    name: primary-tunnel
+  secondary-tunnel:
+    name: secondary-tunnel

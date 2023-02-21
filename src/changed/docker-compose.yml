@@ -14,16 +14,20 @@ services:
     ports:
       - 5000:5000
     networks:
-      - sharednetwork
+      - primary-tunnel
+      - secondary-tunnel
     restart: unless-stopped
 
   playwright-chrome:
     hostname: playwright-chrome
     image: browserless/chrome
     networks:
-      - sharednetwork
+      - primary-tunnel
+      - secondary-tunnel
     restart: unless-stopped
 
 networks:
-  sharednetwork:
-    name: tunnel
+  primary-tunnel:
+    name: primary-tunnel
+  secondary-tunnel:
+    name: secondary-tunnel

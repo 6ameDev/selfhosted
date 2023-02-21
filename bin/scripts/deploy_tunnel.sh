@@ -4,10 +4,10 @@
 source ./.env
 
 # Make directories
-sudo mkdir -pv ${APP_CONFIG_DIR}/cloudflared
+sudo mkdir -pv ${APP_CONFIG_DIR}/tunnel/{primary,secondary}
 
 # Set permissions
-sudo chown -R 65532:65532 ${APP_CONFIG_DIR}/cloudflared
+sudo chown -R 65532:65532 ${APP_CONFIG_DIR}/tunnel
 
 compose_file_path=src/tools/tunnel/docker-compose.yml
 
