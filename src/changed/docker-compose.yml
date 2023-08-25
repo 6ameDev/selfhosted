@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
 
   chrome:
-    image: browserless/chrome
+    image: browserless/chrome:1.59-chrome-stable
     container_name: changed_browser
     networks:
       - primary-tunnel
