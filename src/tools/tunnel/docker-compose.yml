@@ -1,29 +1,13 @@
 version: "3.5"
 services:
-  primary:
-    image: cloudflare/cloudflared:latest
-    container_name: tunnel_primary
-    command: tunnel run ${PRIMARY_TUNNEL_NAME}
-    volumes:
-      - ${APP_CONFIG_DIR}/tunnel/primary:/home/nonroot/.cloudflared/
+  prime:
+    image: cloudflare/cloudflared:latest-arm64
+    container_name: tunnel_prime
+    command: tunnel --no-autoupdate run --token ${TUNNEL_PRIME_TOKEN}
     networks:
-      - primary
-      - secondary
-    restart: unless-stopped
-
-  secondary:
-    image: cloudflare/cloudflared:latest
-    container_name: tunnel_secondary
-    command: tunnel run ${SECONDARY_TUNNEL_NAME}
-    volumes:
-      - ${APP_CONFIG_DIR}/tunnel/secondary:/home/nonroot/.cloudflared/
-    networks:
-      - primary
-      - secondary
+      - prime
     restart: unless-stopped
 
 networks:
-  primary:
-    name: primary-tunnel
-  secondary:
-    name: secondary-tunnel
+  prime:
+    name: tunnel-prime

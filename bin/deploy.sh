@@ -19,7 +19,7 @@ fi
 if [ "$ENABLE_NGINX_PROXY_MANAGER" = true ]; then
     ./bin/scripts/deploy_nginx_proxy_manager.sh
 fi
-if [ "$ENABLE_TUNNEL" = true ]; then
+if [ "$ENABLE_TUNNEL_PRIME" = true ]; then
     ./bin/scripts/deploy_tunnel.sh
 fi
 if [ "$ENABLE_PORTAINER" = true ]; then
