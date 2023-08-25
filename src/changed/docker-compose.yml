@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   chrome:
-    image: browserless/chrome:1.59-chrome-stable
+    image: browserless/chrome:1-puppeteer-15.5.0-slim
     container_name: changed_browser
     restart: unless-stopped
 
