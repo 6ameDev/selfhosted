@@ -12,17 +12,11 @@ services:
       - PLAYWRIGHT_DRIVER_URL=ws://changed_browser:3000/
     ports:
       - 5000:5000
-    networks:
-      - primary-tunnel
-      - secondary-tunnel
     restart: unless-stopped
 
   chrome:
     image: browserless/chrome:1.59-chrome-stable
     container_name: changed_browser
-    networks:
-      - primary-tunnel
-      - secondary-tunnel
     restart: unless-stopped
 
   apprise:
@@ -37,9 +31,3 @@ services:
     ports:
       - 8000:8000
     restart: unless-stopped
-
-networks:
-  primary-tunnel:
-    name: primary-tunnel
-  secondary-tunnel:
-    name: secondary-tunnel
