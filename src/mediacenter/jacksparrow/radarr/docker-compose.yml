@@ -11,7 +11,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${APP_CONFIG_DIR}/radarr:/config
-      - ${STORAGE_DIR}:/data
+      - ${MEDIA_ONE_DIR}:/data
     ports:
       - 7878:7878
     networks:

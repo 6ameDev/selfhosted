@@ -11,7 +11,8 @@ services:
       - JELLYFIN_PublishedServerUrl=http://${HOST_IP}:8096
     volumes:
       - ${APP_CONFIG_DIR}/jellyfin:/config
-      - ${STORAGE_DIR}/media:/data/media
+      - ${MEDIA_ONE_DIR}/media:/media1:ro
+      - ${MEDIA_TWO_DIR}/media:/media2:ro
     ports:
       - 8096:8096
       - 8920:8920

@@ -11,5 +11,5 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM}
     volumes:
       - ${APP_CONFIG_DIR}/plex:/config
-      - ${STORAGE_DIR}/media:/data/media
+      - ${MEDIA_ONE_DIR}/media:/data/media
     restart: unless-stopped
