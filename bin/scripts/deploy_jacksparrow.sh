@@ -24,7 +24,7 @@ sudo usermod -a -G mediacenter qbittorrent
 # Make directories
 sudo mkdir -pv ${APP_CONFIG_DIR}/{sonarr,radarr,lidarr,readarr,prowlarr,qbittorrent}
 sudo mkdir -pv ${MEDIA_ONE_DIR}/{torrents,media}/{movies,music,books}
-sudo mkdir -pv ${MEDIA_TWO_DIR}/{torrents,media}/{tv}
+sudo mkdir -pv ${MEDIA_TWO_DIR}/{torrents,media}/tv
 
 # Set permissions
 sudo chmod -R 775 ${MEDIA_ONE_DIR}/torrents/
