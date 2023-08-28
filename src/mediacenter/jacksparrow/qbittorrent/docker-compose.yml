@@ -12,8 +12,8 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ${APP_CONFIG_DIR}/qbittorrent:/config
-      - ${MEDIA_ONE_DIR}/torrents:/data/torrents/media1
-      - ${MEDIA_TWO_DIR}/torrents:/data/torrents/media2
+      - ${MEDIA_ONE_DIR}/torrents:/media1/torrents
+      - ${MEDIA_TWO_DIR}/torrents:/media2/torrents
     ports:
       - 8080:8080
       - 6881:6881

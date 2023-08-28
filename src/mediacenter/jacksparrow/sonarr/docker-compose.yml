@@ -11,7 +11,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${APP_CONFIG_DIR}/sonarr:/config
-      - ${MEDIA_TWO_DIR}:/data
+      - ${MEDIA_TWO_DIR}:/media2
     ports:
       - 8989:8989
     networks:
