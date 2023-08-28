@@ -11,7 +11,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${APP_CONFIG_DIR}/readarr:/config
-      - ${STORAGE_DIR}:/data
+      - ${MEDIA_ONE_DIR}:/data
     ports:
       - 8787:8787
     networks:

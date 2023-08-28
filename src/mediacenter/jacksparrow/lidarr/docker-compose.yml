@@ -11,7 +11,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${APP_CONFIG_DIR}/lidarr:/config
-      - ${STORAGE_DIR}:/data
+      - ${MEDIA_ONE_DIR}:/data
     ports:
       - 8686:8686
     networks:
