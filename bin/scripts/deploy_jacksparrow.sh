@@ -57,6 +57,9 @@ fi
 if [ "$ENABLE_PROWLARR" = true ]; then
     options="${options} -f src/mediacenter/jacksparrow/prowlarr/docker-compose.yml"
 fi
+if [ "$ENABLE_FLARESOLVERR" = true ]; then
+    options="${options} -f src/mediacenter/jacksparrow/flaresolverr/docker-compose.yml"
+fi
 if [ "$ENABLE_QBITTORRENT" = true ]; then
     options="${options} -f src/mediacenter/jacksparrow/qbittorrent/docker-compose.yml"
 fi
