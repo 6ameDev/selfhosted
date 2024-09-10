@@ -2,7 +2,7 @@
 version: "3.5"
 services:
   qbittorrent:
-    image: cr.hotio.dev/hotio/qbittorrent:release
+    image: ghcr.io/hotio/qbittorrent:release
     container_name: qbittorrent
     environment:
       - PUID=13006
