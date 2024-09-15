@@ -1,0 +1,63 @@
+name: vault
+
+services:
+  db-migration:
+    image: infisical/infisical:latest-postgres
+    container_name: vault-migration
+    pull_policy: always
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    command: npm run migration:latest
+    networks:
+      - vault
+
+  infisical:
+    image: infisical/infisical:latest-postgres
+    container_name: vault
+    pull_policy: always
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      db-migration:
+        condition: service_completed_successfully
+    env_file: .env
+    environment:
+      - NODE_ENV=production
+    ports:
+      - ${APP_PORT}:8080
+    restart: unless-stopped
+    networks:
+      - vault
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: vault-redis
+    env_file: .env
+    volumes:
+      - ${HOME}/.vault/redis_data:/data
+    entrypoint: redis-server --appendonly yes  --requirepass ${REDIS_PASSWORD}
+    networks:
+      - vault
+
+  db:
+    image: postgres:16.4-alpine
+    container_name: vault-db
+    shm_size: 128mb
+    env_file: .env
+    volumes:
+      - ${HOME}/.vault/pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready --username=${POSTGRES_USER} && psql --username=${POSTGRES_USER} --list"
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    restart: always
+    networks:
+      - vault
+
+networks:
+  vault:
