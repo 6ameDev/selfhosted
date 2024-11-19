@@ -22,6 +22,7 @@ services:
     restart: unless-stopped
 
   sockpuppetbrowser:
+    container_name: sockpuppetbrowser
     hostname: sockpuppetbrowser
     image: dgtlmoon/sockpuppetbrowser:latest
     environment:
