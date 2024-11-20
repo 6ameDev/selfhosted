@@ -2,8 +2,8 @@ name: changed
 
 services:
   changedetection:
-    image: ghcr.io/dgtlmoon/changedetection.io
     container_name: changedetection
+    image: ghcr.io/dgtlmoon/changedetection.io
     depends_on:
       sockpuppetbrowser:
         condition: service_started
@@ -13,14 +13,14 @@ services:
       - PORT=5000
       - PUID=1000
       - PGID=1000
-      - PLAYWRIGHT_DRIVER_URL=ws://playwright-chrome:3000/?stealth=1&--disable-web-security=true
+      - PLAYWRIGHT_DRIVER_URL=ws://sockpuppetbrowser:3000
       - HIDE_REFERER=true
       - FETCH_WORKERS=2
     ports:
       - 5000:5000
     restart: unless-stopped
 
-  sockpuppetbrowser:
+  puppetbrowser:
     container_name: sockpuppetbrowser
     image: dgtlmoon/sockpuppetbrowser:latest
     environment:
@@ -29,36 +29,6 @@ services:
       - SCREEN_DEPTH=16
       - MAX_CONCURRENT_CHROME_PROCESSES=10
     restart: unless-stopped
-
-  browser-chrome:
-    container_name: browser-chrome
-    image: seleniarm/standalone-chromium:4.0.0-20211213
-    environment:
-      - VNC_NO_PASSWORD=1
-      - SCREEN_WIDTH=1920
-      - SCREEN_HEIGHT=1080
-      - SCREEN_DEPTH=24
-    volumes:
-      - /dev/shm:/dev/shm
-    restart: unless-stopped
-
-  playwright-chrome:
-    container_name: playwright-chrome
-    image: browserless/chrome
-    platform: linux/arm64/v8
-    restart: unless-stopped
-    environment:
-      - SCREEN_WIDTH=1920
-      - SCREEN_HEIGHT=1024
-      - SCREEN_DEPTH=16
-      - ENABLE_DEBUGGER=false
-      - PREBOOT_CHROME=false
-      - CONNECTION_TIMEOUT=300000
-      - MAX_CONCURRENT_SESSIONS=3
-      - CHROME_REFRESH_TIME=600000
-      - DEFAULT_BLOCK_ADS=false
-      - DEFAULT_STEALTH=true
-      - DEFAULT_IGNORE_HTTPS_ERRORS=true```
 
   apprise:
     image: lscr.io/linuxserver/apprise-api:latest
