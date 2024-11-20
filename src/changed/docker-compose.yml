@@ -4,7 +4,6 @@ services:
   changedetection:
     image: ghcr.io/dgtlmoon/changedetection.io
     container_name: changedetection
-    hostname: changedetection
     depends_on:
       sockpuppetbrowser:
         condition: service_started
@@ -14,22 +13,33 @@ services:
       - PORT=5000
       - PUID=1000
       - PGID=1000
-      - PLAYWRIGHT_DRIVER_URL=ws://sockpuppetbrowser:3000
+      - WEBDRIVER_URL=http://browser-chrome:4444/wd/hub
       - HIDE_REFERER=true
-      - FETCH_WORKERS=1
+      - FETCH_WORKERS=3
     ports:
       - 5000:5000
     restart: unless-stopped
 
   sockpuppetbrowser:
     container_name: sockpuppetbrowser
-    hostname: sockpuppetbrowser
     image: dgtlmoon/sockpuppetbrowser:latest
     environment:
       - SCREEN_WIDTH=1920
       - SCREEN_HEIGHT=1024
       - SCREEN_DEPTH=16
       - MAX_CONCURRENT_CHROME_PROCESSES=10
+    restart: unless-stopped
+
+  browser-chrome:
+    container_name: browser-chrome
+    image: seleniarm/standalone-chromium:4.0.0-20211213
+    environment:
+      - VNC_NO_PASSWORD=1
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+      - SCREEN_DEPTH=24
+    volumes:
+      - /dev/shm:/dev/shm
     restart: unless-stopped
 
   apprise:
