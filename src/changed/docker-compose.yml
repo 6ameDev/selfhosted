@@ -5,7 +5,7 @@ services:
     container_name: changedetection
     image: ghcr.io/dgtlmoon/changedetection.io
     depends_on:
-      sockpuppetbrowser:
+      puppetbrowser:
         condition: service_started
     volumes:
       - ${APP_CONFIG_DIR}/changed:/datastore
