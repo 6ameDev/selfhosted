@@ -1,22 +1,33 @@
-version: '2'
+name: changed
+
 services:
   changedetection:
+    container_name: changedetection
     image: ghcr.io/dgtlmoon/changedetection.io
-    container_name: changed_app
+    depends_on:
+      puppetbrowser:
+        condition: service_started
     volumes:
       - ${APP_CONFIG_DIR}/changed:/datastore
     environment:
       - PORT=5000
       - PUID=1000
       - PGID=1000
-      - PLAYWRIGHT_DRIVER_URL=ws://changed_browser:3000/
+      - PLAYWRIGHT_DRIVER_URL=ws://sockpuppetbrowser:3000
+      - HIDE_REFERER=true
+      - FETCH_WORKERS=2
     ports:
       - 5000:5000
     restart: unless-stopped
 
-  chrome:
-    image: browserless/chrome:1-puppeteer-15.5.0-slim
-    container_name: changed_browser
+  puppetbrowser:
+    container_name: sockpuppetbrowser
+    image: dgtlmoon/sockpuppetbrowser:latest
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1024
+      - SCREEN_DEPTH=16
+      - MAX_CONCURRENT_CHROME_PROCESSES=10
     restart: unless-stopped
 
   apprise:
