@@ -3,8 +3,8 @@ name: tailscale
 services:
   ts-mealie:
     image: tailscale/tailscale:latest
-    container_name: ts-mealie-container
-    hostname: ts-mealie-hn
+    container_name: ts-mealie
+    hostname: ts-mealie
     environment:
       - TS_AUTHKEY=${TS_CLIENT_SECRET}?ephemeral=false
       - TS_EXTRA_ARGS=--advertise-tags=tag:container
