@@ -1,0 +1,22 @@
+name: mealie
+
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    container_name: mealie
+    volumes:
+      - ${APP_CONFIG_DIR}/mealie:/app/data
+    environment:
+      - ALLOW_SIGNUP=true
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "cook"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailscale
+    restart: unless-stopped
+
+networks:
+  tailscale:
+    name: tailscale
+    external: true

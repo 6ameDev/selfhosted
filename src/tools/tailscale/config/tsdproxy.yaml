@@ -1,0 +1,10 @@
+defaultProxyProvider: default
+docker:
+  srv1:
+    host: unix:///var/run/docker.sock
+    defaultProxyProvider: default
+tailscale:
+  providers:
+    default:
+      authKey: ""
+      authKeyFile: ""
