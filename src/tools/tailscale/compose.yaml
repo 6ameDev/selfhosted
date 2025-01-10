@@ -1,32 +1,19 @@
 name: tailscale
 
 services:
-  ts-mealie:
-    image: tailscale/tailscale:latest
-    container_name: ts-mealie
-    hostname: ts-mealie
-    environment:
-      - TS_AUTHKEY=${TS_CLIENT_SECRET}?ephemeral=false
-      - TS_EXTRA_ARGS=--advertise-tags=tag:container
-      - TS_SERVE_CONFIG=/config/mealie.json
-      - TS_STATE_DIR=/var/lib/tailscale
+  tsdproxy:
+    image: almeidapaulopt/tsdproxy:1.4.3
+    container_name: tailproxy
+    ports:
+      - "8081:8080"
     volumes:
-      - ${APP_CONFIG_DIR}/tailscale/state:/var/lib/tailscale
-      - ${APP_CONFIG_DIR}/tailscale/config:/config
-      - /dev/net/tun:/dev/net/tun
-    cap_add:
-      - net_admin
-      - sys_module
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config:/config
+      - ${APP_CONFIG_DIR}/tsdproxy:/data
+    networks:
+      - tailscale
     restart: unless-stopped
 
-  mealie:
-    image: ghcr.io/mealie-recipes/mealie:latest
-    container_name: mealie
-    network_mode: service:ts-mealie
-    depends_on:
-      - ts-mealie
-    volumes:
-      - ${APP_CONFIG_DIR}/mealie:/app/data
-    environment:
-      - ALLOW_SIGNUP=true
-    restart: unless-stopped
+networks:
+  tailscale:
+    name: tailscale
