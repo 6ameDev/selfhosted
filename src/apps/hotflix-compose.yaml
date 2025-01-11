@@ -1,0 +1,33 @@
+name: hotflix
+
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=${UID}
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+      - JELLYFIN_PublishedServerUrl=http://${HOST_IP}:8096
+    volumes:
+      - ${APP_CONFIG_DIR}/jellyfin:/config
+      - ${MEDIA_ONE_DIR}/media:/media1:ro
+      - ${MEDIA_TWO_DIR}/media:/media2:ro
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "hotflix"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailscale
+    restart: unless-stopped
+
+networks:
+  tailscale:
+    name: tailscale
+    external: true
