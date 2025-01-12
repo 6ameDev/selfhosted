@@ -1,7 +1,0 @@
-## Guide link: https://gbe0.com/posts/linux/linux-duplicity-backup-dropbox/
-## Location: ~/.duplicity_env
-## chmod 0600 ~/.duplicity_env
-
-## GPG Config
-export GPG_KEY="9FK3E47D160803D647CDC2987198F6ED50A7CB37"
-export PASSPHRASE="YOUR GPG PASSPHRASE"
