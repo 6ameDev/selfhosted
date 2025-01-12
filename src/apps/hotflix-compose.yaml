@@ -48,6 +48,27 @@ services:
       - tailscale
     restart: unless-stopped
 
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=13001
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${APP_CONFIG_DIR}/sonarr:/config
+      - ${MEDIA_TWO_DIR}:/media2
+    ports:
+      - 8989:8989
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "shows"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailscale
+    restart: unless-stopped
+
 networks:
   tailscale:
     name: tailscale
