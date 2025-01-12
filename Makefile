@@ -3,7 +3,7 @@ HOST_IP := $(shell hostname -I | cut -d ' ' -f1)
 UID := $(shell id -u)
 ENV_FILE := .env
 DEPLOYMENT_ENV_FILE := deploy.env
-APPS_DIR := ./
+APPS_DIR := src/apps
 
 # Default target
 .PHONY: help
@@ -29,12 +29,11 @@ deploy:
 		echo "Error: STACK parameter is required. Usage: make deploy STACK=<stackname>"; \
 		exit 1; \
 	fi
-	@if [ ! -f "$(APPS_DIR)$(STACK)-compose.yaml" ]; then \
-		echo "Error: Compose file $(APPS_DIR)$(STACK)-compose.yaml does not exist"; \
+	@if [ ! -f "$(APPS_DIR)/$(STACK)-compose.yaml" ]; then \
+		echo "Error: Compose file $(APPS_DIR)/$(STACK)-compose.yaml does not exist"; \
 		exit 1; \
 	fi
 	@make create-env
 	@echo "Deploying $(STACK) stack..."
 	@trap 'make clean' EXIT; \
-	docker compose -f fail$(APPS_DIR)$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
-
+	docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
