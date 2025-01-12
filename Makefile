@@ -11,6 +11,7 @@ APPS_DIR := src/apps
 .PHONY: help
 help:
 	@echo "Available commands:"
+	@echo "  make deploy-tailscale          - Deploy tailscale stack"
 	@echo "  make deploy STACK=<stackname>  - Deploy a specific stack"
 
 # Create deploy.env file
@@ -24,6 +25,14 @@ create-env:
 clean:
 	@echo "Removing deploy.env file..."
 	@rm -f $(DEPLOYMENT_ENV_FILE)
+
+# Deploy tailscale stack
+.PHONY: deploy-tailscale
+deploy-tailscale:
+	@make create-env
+	@echo "Deploying TailScale..."
+	@trap 'make clean' EXIT; \
+	docker compose -f src/tailscale/compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
 
 # Deploy a specific stack
 .PHONY: deploy
