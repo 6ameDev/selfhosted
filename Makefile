@@ -23,8 +23,10 @@ create-env:
 
 # Clean up
 clean:
-	@echo "Removing deploy.env file..."
+	@echo "Cleaning up..."
 	@rm -f $(DEPLOYMENT_ENV_FILE)
+	@docker image prune -f
+	@docker system prune
 
 # Deploy tailscale stack
 .PHONY: deploy-tailscale
@@ -46,6 +48,9 @@ deploy:
 		exit 1; \
 	fi
 	@make create-env
-	@echo "Deploying $(STACK) stack..."
+	@echo "Pulling & Deploying $(STACK) stack..."
 	@trap 'make clean' EXIT; \
-	docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
+	( \
+		docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) pull && \
+		docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d \
+	)
