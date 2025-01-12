@@ -94,6 +94,26 @@ services:
       - tailscale
     restart: unless-stopped
 
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=13005
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${APP_CONFIG_DIR}/prowlarr:/config
+    ports:
+      - 9696:9696
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "prowlarr"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailscale
+    restart: unless-stopped
+
 networks:
   tailscale:
     name: tailscale
