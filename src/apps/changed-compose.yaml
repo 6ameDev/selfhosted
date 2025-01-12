@@ -1,0 +1,68 @@
+name: changed
+
+services:
+  changedetection:
+    container_name: changedetection
+    image: dgtlmoon/changedetection.io:latest
+    depends_on:
+      puppetbrowser:
+        condition: service_started
+    volumes:
+      - ${APP_CONFIG_DIR}/changed:/datastore
+      - ${APP_CONFIG_DIR}/changed/headers.txt:/datastore/headers.txt
+    environment:
+      - PORT=5000
+      - PUID=1000
+      - PGID=1000
+      - PLAYWRIGHT_DRIVER_URL=ws://sockpuppetbrowser:3000?stealth=1&--disable-web-security=true
+      - HIDE_REFERER=true
+      - FETCH_WORKERS=2
+    ports:
+      - 5000:5000
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "changed"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailscale
+    restart: unless-stopped
+
+  puppetbrowser:
+    container_name: sockpuppetbrowser
+    image: dgtlmoon/sockpuppetbrowser:latest
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1024
+      - SCREEN_DEPTH=16
+      - MAX_CONCURRENT_CHROME_PROCESSES=10
+      - ENABLE_DEBUGGER=false
+      - PREBOOT_CHROME=true
+      - CONNECTION_TIMEOUT=300000
+      - MAX_CONCURRENT_SESSIONS=10
+      - CHROME_REFRESH_TIME=600000
+      - DEFAULT_BLOCK_ADS=false
+      - DEFAULT_STEALTH=true
+      - DEFAULT_IGNORE_HTTPS_ERRORS=true
+    networks:
+      - tailscale
+    restart: unless-stopped
+
+  apprise:
+    image: lscr.io/linuxserver/apprise-api:latest
+    container_name: changed_apprise
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${APP_CONFIG_DIR}/apprise:/config
+    ports:
+      - 8000:8000
+    networks:
+      - tailscale
+    restart: unless-stopped
+
+networks:
+  tailscale:
+    name: tailscale
+    external: true
