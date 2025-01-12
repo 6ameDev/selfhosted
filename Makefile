@@ -36,5 +36,5 @@ deploy:
 	fi
 	@make create-env
 	@echo "Deploying $(STACK) stack..."
-	# @trap 'make clean' EXIT; \
-	# docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
+	@trap 'make clean' EXIT; \
+	docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
