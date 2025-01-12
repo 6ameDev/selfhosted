@@ -14,7 +14,8 @@ help:
 # Create deploy.env file
 create-env:
 	@echo "Creating deploy.env file..."
-	@echo "HOST_IP=$(HOST_IP)" > $(DEPLOYMENT_ENV_FILE)
+	@cp $(ENV_FILE) $(DEPLOYMENT_ENV_FILE)
+	@echo "HOST_IP=$(HOST_IP)" >> $(DEPLOYMENT_ENV_FILE)
 	@echo "UID=$(UID)" >> $(DEPLOYMENT_ENV_FILE)
 
 # Clean up
@@ -35,5 +36,5 @@ deploy:
 	fi
 	@make create-env
 	@echo "Deploying $(STACK) stack..."
-	@trap 'make clean' EXIT; \
-	docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
+	# @trap 'make clean' EXIT; \
+	# docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
