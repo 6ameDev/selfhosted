@@ -1,3 +1,5 @@
+MAKEFLAGS += --no-print-directory
+
 # Variables
 HOST_IP := $(shell hostname -I | cut -d ' ' -f1)
 UID := $(shell id -u)
