@@ -32,9 +32,9 @@ services:
     container_name: jellyfin
     user: 1000:1000
     volumes:
-      - ./jellyfin/config:/config
-      - ./jellyfin/cache:/cache
-      - ./jellyfin/media:/media
+      - ${HOME}/.docker/jellyfin/config:/config
+      - ${HOME}/.docker/jellyfin/cache:/cache
+      - ${HOME}/.docker/jellyfin/media:/media
     ports:
       - 8096:8096
       - 8920:8920
