@@ -1,132 +1,155 @@
 name: hotflix
 
 services:
+  # jellyfin:
+  #   image: lscr.io/linuxserver/jellyfin:latest
+  #   container_name: jellyfin
+  #   environment:
+  #     - PUID=${UID}
+  #     - PGID=13000
+  #     - UMASK=002
+  #     - TZ=${TIMEZONE}
+  #     - JELLYFIN_PublishedServerUrl=http://${HOST_IP}:8096
+  #   volumes:
+  #     - ${APP_CONFIG_DIR}/jellyfin:/config
+  #     - ${MEDIA_ONE_DIR}/media:/media1:ro
+  #     - ${MEDIA_TWO_DIR}/media:/media2:ro
+  #   ports:
+  #     - 8096:8096
+  #     - 8920:8920
+  #     - 7359:7359/udp
+  #     - 1900:1900/udp
+  #   labels:
+  #     tsdproxy.enable: "true"
+  #     tsdproxy.name: "hotflix"
+  #     tsdproxy.ephemeral: "false"
+  #   networks:
+  #     - tailscale
+  #   restart: unless-stopped
+
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
+    image: jellyfin/jellyfin
     container_name: jellyfin
-    environment:
-      - PUID=${UID}
-      - PGID=13000
-      - UMASK=002
-      - TZ=${TIMEZONE}
-      - JELLYFIN_PublishedServerUrl=http://${HOST_IP}:8096
+    user: 1000:1000
     volumes:
-      - ${APP_CONFIG_DIR}/jellyfin:/config
-      - ${MEDIA_ONE_DIR}/media:/media1:ro
-      - ${MEDIA_TWO_DIR}/media:/media2:ro
+      - ./jellyfin/config:/config
+      - ./jellyfin/cache:/cache
+      - ./jellyfin/media:/media
     ports:
       - 8096:8096
       - 8920:8920
       - 7359:7359/udp
       - 1900:1900/udp
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: "hotflix"
-      tsdproxy.ephemeral: "false"
-    networks:
-      - tailscale
     restart: unless-stopped
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    environment:
-      - PUID=13002
-      - PGID=13000
-      - UMASK=002
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${APP_CONFIG_DIR}/radarr:/config
-      - ${MEDIA_ONE_DIR}:/media1
-    ports:
-      - 7878:7878
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: "movies"
-      tsdproxy.ephemeral: "false"
-    networks:
-      - tailscale
-    restart: unless-stopped
+  # radarr:
+  #   image: lscr.io/linuxserver/radarr:latest
+  #   container_name: radarr
+  #   environment:
+  #     - PUID=13002
+  #     - PGID=13000
+  #     - UMASK=002
+  #     - TZ=${TIMEZONE}
+  #   volumes:
+  #     - ${APP_CONFIG_DIR}/radarr:/config
+  #     - ${MEDIA_ONE_DIR}:/media1
+  #   ports:
+  #     - 7878:7878
+  #   labels:
+  #     tsdproxy.enable: "true"
+  #     tsdproxy.name: "movies"
+  #     tsdproxy.ephemeral: "false"
+  #   networks:
+  #     - tailscale
+  #   restart: unless-stopped
 
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
-    environment:
-      - PUID=13001
-      - PGID=13000
-      - UMASK=002
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${APP_CONFIG_DIR}/sonarr:/config
-      - ${MEDIA_TWO_DIR}:/media2
-    ports:
-      - 8989:8989
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: "shows"
-      tsdproxy.ephemeral: "false"
-    networks:
-      - tailscale
-    restart: unless-stopped
+  # sonarr:
+  #   image: lscr.io/linuxserver/sonarr:latest
+  #   container_name: sonarr
+  #   environment:
+  #     - PUID=13001
+  #     - PGID=13000
+  #     - UMASK=002
+  #     - TZ=${TIMEZONE}
+  #   volumes:
+  #     - ${APP_CONFIG_DIR}/sonarr:/config
+  #     - ${MEDIA_TWO_DIR}:/media2
+  #   ports:
+  #     - 8989:8989
+  #   labels:
+  #     tsdproxy.enable: "true"
+  #     tsdproxy.name: "shows"
+  #     tsdproxy.ephemeral: "false"
+  #   networks:
+  #     - tailscale
+  #   restart: unless-stopped
 
-  qbittorrent:
-    image: ghcr.io/hotio/qbittorrent:latest
-    container_name: qbittorrent
-    environment:
-      - PUID=13006
-      - PGID=13000
-      - UMASK=002
-      - TZ=${TIMEZONE}
-      - WEBUI_PORT=8080
-    volumes:
-      - ${APP_CONFIG_DIR}/qbittorrent:/config
-      - ${MEDIA_ONE_DIR}/torrents:/media1/torrents
-      - ${MEDIA_TWO_DIR}/torrents:/media2/torrents
-    ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: "qbit"
-      tsdproxy.ephemeral: "false"
-    networks:
-      - tailscale
-    restart: unless-stopped
+  # qbittorrent:
+  #   image: ghcr.io/hotio/qbittorrent:latest
+  #   container_name: qbittorrent
+  #   environment:
+  #     - PUID=13006
+  #     - PGID=13000
+  #     - UMASK=002
+  #     - TZ=${TIMEZONE}
+  #     - WEBUI_PORT=8080
+  #   volumes:
+  #     - ${APP_CONFIG_DIR}/qbittorrent:/config
+  #     - ${MEDIA_ONE_DIR}/torrents:/media1/torrents
+  #     - ${MEDIA_TWO_DIR}/torrents:/media2/torrents
+  #   ports:
+  #     - 8080:8080
+  #     - 6881:6881
+  #     - 6881:6881/udp
+  #   labels:
+  #     tsdproxy.enable: "true"
+  #     tsdproxy.name: "qbit"
+  #     tsdproxy.ephemeral: "false"
+  #   networks:
+  #     - tailscale
+  #   restart: unless-stopped
 
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
-    environment:
-      - PUID=13005
-      - PGID=13000
-      - UMASK=002
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${APP_CONFIG_DIR}/prowlarr:/config
-    ports:
-      - 9696:9696
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: "prowlarr"
-      tsdproxy.ephemeral: "false"
-    networks:
-      - tailscale
-    restart: unless-stopped
+  # prowlarr:
+  #   image: lscr.io/linuxserver/prowlarr:latest
+  #   container_name: prowlarr
+  #   environment:
+  #     - PUID=13005
+  #     - PGID=13000
+  #     - UMASK=002
+  #     - TZ=${TIMEZONE}
+  #   volumes:
+  #     - ${APP_CONFIG_DIR}/prowlarr:/config
+  #   ports:
+  #     - 9696:9696
+  #   labels:
+  #     tsdproxy.enable: "true"
+  #     tsdproxy.name: "prowlarr"
+  #     tsdproxy.ephemeral: "false"
+  #   networks:
+  #     - tailscale
+  #   restart: unless-stopped
 
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: flaresolverr
-    environment:
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-      - LOG_HTML=${LOG_HTML:-false}
-      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=${TIMEZONE}
-    ports:
-      - 8191:8191
-    networks:
-      - tailscale
-    restart: unless-stopped
+  # flaresolverr:
+  #   image: ghcr.io/flaresolverr/flaresolverr:latest
+  #   container_name: flaresolverr
+  #   environment:
+  #     - LOG_LEVEL=${LOG_LEVEL:-info}
+  #     - LOG_HTML=${LOG_HTML:-false}
+  #     - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+  #     - TZ=${TIMEZONE}
+  #   ports:
+  #     - 8191:8191
+  #   networks:
+  #     - tailscale
+  #   restart: unless-stopped
 
 networks:
   tailscale:
