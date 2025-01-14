@@ -28,7 +28,7 @@ services:
   #   restart: unless-stopped
 
   jellyfin:
-    image: jellyfin/jellyfin
+    image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     user: 1000:1000
     volumes:
@@ -41,14 +41,6 @@ services:
       - 7359:7359/udp
       - 1900:1900/udp
     restart: unless-stopped
-    runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
 
   # radarr:
   #   image: lscr.io/linuxserver/radarr:latest
