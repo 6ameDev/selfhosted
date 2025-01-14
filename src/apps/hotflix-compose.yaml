@@ -30,7 +30,9 @@ services:
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
-    user: 1000:1000
+    environment:
+      - PUID=1000
+      - PGID=1000
     volumes:
       - ${HOME}/.docker/jellyfin/config:/config
       - ${HOME}/.docker/jellyfin/cache:/cache
