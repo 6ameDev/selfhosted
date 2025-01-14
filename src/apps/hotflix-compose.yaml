@@ -34,14 +34,20 @@ services:
       - PUID=1000
       - PGID=1000
     volumes:
-      - ${HOME}/.docker/jellyfin/config:/config
-      - ${HOME}/.docker/jellyfin/cache:/cache
-      - ${HOME}/.docker/jellyfin/media:/media
+      - ${APP_CONFIG_DIR}/jellyfin/config:/config
+      - ${APP_CONFIG_DIR}/jellyfin/cache:/cache
+      - ${APP_CONFIG_DIR}/jellyfin/media:/media
     ports:
       - 8096:8096
       - 8920:8920
       - 7359:7359/udp
       - 1900:1900/udp
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "netflex"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailscale
     restart: unless-stopped
 
   # radarr:

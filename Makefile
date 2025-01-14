@@ -26,7 +26,7 @@ clean:
 	@echo "Cleaning up..."
 	@rm -f $(DEPLOYMENT_ENV_FILE)
 	@docker image prune -f
-	@docker system prune
+	@docker system prune -f
 
 # Deploy tailscale stack
 .PHONY: deploy-tailscale
