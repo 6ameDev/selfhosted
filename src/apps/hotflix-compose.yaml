@@ -31,12 +31,16 @@ services:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=13000
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+      - JELLYFIN_PublishedServerUrl=${JELLYFIN_SERVER_URL}
     volumes:
-      - ${APP_CONFIG_DIR}/jellyfin/config:/config
-      - ${APP_CONFIG_DIR}/jellyfin/cache:/cache
-      - ${APP_CONFIG_DIR}/jellyfin/media:/media
+      - ${APP_CONFIG_DIR}/hotflix/jellyfin/config:/config
+      - ${APP_CONFIG_DIR}/hotflix/jellyfin/cache:/cache
+      - ${HOTFLIX_MEDIA_DIR}/shows:/media/shows:ro
+      - ${HOTFLIX_MEDIA_DIR}/movies:/media/movies:ro
     ports:
       - 8096:8096
       - 8920:8920
@@ -44,7 +48,7 @@ services:
       - 1900:1900/udp
     labels:
       tsdproxy.enable: "true"
-      tsdproxy.name: "netflex"
+      tsdproxy.name: "hotflix"
       tsdproxy.ephemeral: "false"
     networks:
       - tailscale

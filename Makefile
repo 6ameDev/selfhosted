@@ -7,6 +7,8 @@ ENV_FILE := .env
 DEPLOYMENT_ENV_FILE := deploy.env
 APPS_DIR := src/apps
 
+BASE_ENV := src/env/base.env
+
 # Default target
 .PHONY: help
 help:
@@ -27,6 +29,25 @@ clean:
 	@rm -f $(DEPLOYMENT_ENV_FILE)
 	@docker image prune -f
 	@docker system prune -f
+
+# Setup hotflix
+.PHONY: setup-hotflix
+setup-hotflix:
+	@echo "Creating deploy.env file..."
+	@cp $(BASE_ENV) $(DEPLOYMENT_ENV_FILE)
+	@cat src/env/hotflix.env >> $(DEPLOYMENT_ENV_FILE)
+	@trap 'make clean' EXIT; \
+	./src/init/hotflix.sh
+
+# Deploy hotflix stack
+.PHONY: deploy-hotflix
+deploy-hotflix:
+	@echo "Creating deploy.env file..."
+	@cp $(BASE_ENV) $(DEPLOYMENT_ENV_FILE)
+	@cat src/env/hotflix.env >> $(DEPLOYMENT_ENV_FILE)
+	@echo "Deploying Hotflix..."
+	@trap 'make clean' EXIT; \
+	docker compose -f src/apps/hotflix-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
 
 # Deploy tailscale stack
 .PHONY: deploy-tailscale
