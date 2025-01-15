@@ -38,7 +38,6 @@ services:
       - JELLYFIN_PublishedServerUrl=${JELLYFIN_SERVER_URL}
     volumes:
       - ${APP_CONFIG_DIR}/hotflix/jellyfin/config:/config
-      - ${APP_CONFIG_DIR}/hotflix/jellyfin/cache:/cache
       - ${HOTFLIX_MEDIA_DIR}/shows:/media/shows:ro
       - ${HOTFLIX_MEDIA_DIR}/movies:/media/movies:ro
     ports:
