@@ -1,0 +1,33 @@
+---
+version: "3.7"
+services:
+  ts-mealie:
+    image: tailscale/tailscale:latest
+    container_name: ts-mealie
+    hostname: testmeal
+    environment:
+      - TS_AUTHKEY=dummy-key?ephemeral=false
+      - TS_EXTRA_ARGS=--advertise-tags=tag:container
+      - TS_SERVE_CONFIG=/config/mealie.json
+      - TS_STATE_DIR=/var/lib/tailscale
+    volumes:
+      - ${APP_CONFIG_DIR}/ts-mealie/state:/var/lib/tailscale
+      - ${APP_CONFIG_DIR}/ts-mealie/config:/config
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
+    restart: unless-stopped
+
+  testmeal:
+    image: ghcr.io/mealie-recipes/mealie:v1.0.0
+    container_name: testmeal
+    network_mode: service:ts-mealie
+    depends_on:
+      - ts-mealie
+    volumes:
+      - ${APP_CONFIG_DIR}/testmeal:/app/data/
+    environment:
+      - ALLOW_SIGNUP=true
+    restart: unless-stopped
