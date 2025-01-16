@@ -34,7 +34,7 @@ services:
     environment:
       - TS_AUTHKEY=${TAILSCALE_AUTHKEY}?ephemeral=false
       - "TS_EXTRA_ARGS=--advertise-tags=tag:container --reset"
-      - TS_SERVE_CONFIG=./../configs/jellyfin.json
+      - TS_SERVE_CONFIG=/configs/jellyfin.json
       - TS_STATE_DIR=/var/lib/tailscale
     volumes:
       - ${APP_CONFIG_DIR}/tailscale:/var/lib/tailscale
