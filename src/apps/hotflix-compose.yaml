@@ -27,36 +27,36 @@ services:
   #     - tailscale
   #   restart: unless-stopped
 
-  ts-jellyfin:
-    image: tailscale/tailscale:latest
-    container_name: ts-jellyfin
-    hostname: hotflix
-    environment:
-      - TS_AUTHKEY=${TAILSCALE_AUTHKEY}?ephemeral=false
-      - "TS_EXTRA_ARGS=--advertise-tags=tag:container --reset"
-      - TS_SERVE_CONFIG=/configs/jellyfin.json
-      - TS_STATE_DIR=/var/lib/tailscale
-    volumes:
-      - ${APP_CONFIG_DIR}/tailscale:/var/lib/tailscale
-      - /dev/net/tun:/dev/net/tun
-    cap_add:
-      - net_admin
-      - sys_module
-    ports:
-      - 8096:8096
-      - 8920:8920
-      - 7359:7359/udp
-      - 1900:1900/udp
-    restart: unless-stopped
-    networks:
-      - tailcar
+  # ts-jellyfin:
+  #   image: tailscale/tailscale:latest
+  #   container_name: ts-jellyfin
+  #   hostname: hotflix
+  #   environment:
+  #     - TS_AUTHKEY=${TAILSCALE_AUTHKEY}?ephemeral=false
+  #     - "TS_EXTRA_ARGS=--advertise-tags=tag:container --reset"
+  #     - TS_SERVE_CONFIG=/configs/jellyfin.json
+  #     - TS_STATE_DIR=/var/lib/tailscale
+  #   volumes:
+  #     - ${APP_CONFIG_DIR}/tailscale:/var/lib/tailscale
+  #     - /dev/net/tun:/dev/net/tun
+  #   cap_add:
+  #     - net_admin
+  #     - sys_module
+  #   ports:
+  #     - 8096:8096
+  #     - 8920:8920
+  #     - 7359:7359/udp
+  #     - 1900:1900/udp
+  #   restart: unless-stopped
+  #   networks:
+  #     - tailcar
 
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
-    network_mode: service:ts-jellyfin
-    depends_on:
-      - ts-jellyfin
+    # network_mode: service:ts-jellyfin
+    # depends_on:
+    #   - ts-jellyfin
     environment:
       - PUID=13000
       - PGID=13000
@@ -67,6 +67,13 @@ services:
       - ${APP_CONFIG_DIR}/hotflix/jellyfin/config:/config
       - ${HOTFLIX_MEDIA_DIR}/shows:/media/shows:ro
       - ${HOTFLIX_MEDIA_DIR}/movies:/media/movies:ro
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
+    networks:
+      - tailcar
     restart: unless-stopped
 
   # radarr:
