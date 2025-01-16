@@ -39,7 +39,7 @@ services:
       - TS_USERSPACE=false
     volumes:
       - ${APP_CONFIG_DIR}/ts-jellyfin/state:/var/lib/tailscale
-      - ./configs:/config
+      - ./../configs:/config
       - /dev/net/tun:/dev/net/tun
     cap_add:
       - net_admin
