@@ -112,6 +112,7 @@ services:
     labels:
       tsdproxy.enable: "true"
       tsdproxy.name: "qbit"
+      tsdproxy.container_port: 8080
       tsdproxy.ephemeral: "false"
     networks:
       - tailproxy
