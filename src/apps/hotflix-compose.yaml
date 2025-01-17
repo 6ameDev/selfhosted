@@ -60,7 +60,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${APP_CONFIG_DIR}/hotflix/radarr:/config
-      - ${HOTFLIX_DATA_DIR}/movies:/data
+      - ${HOTFLIX_DATA_DIR}/movies:/data/movies
     ports:
       - 7878:7878
     labels:
@@ -81,7 +81,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${APP_CONFIG_DIR}/hotflix/sonarr:/config
-      - ${HOTFLIX_DATA_DIR}/shows:/data
+      - ${HOTFLIX_DATA_DIR}/shows:/data/shows
     ports:
       - 8989:8989
     labels:
@@ -103,8 +103,8 @@ services:
       - WEBUI_PORT=8080
     volumes:
       - ${APP_CONFIG_DIR}/hotflix/qbittorrent:/config
-      - ${HOTFLIX_DATA_DIR}/shows/torrents:/torrents/shows
-      - ${HOTFLIX_DATA_DIR}/movies/torrents:/torrents/movies
+      - ${HOTFLIX_DATA_DIR}/shows/torrents:/data/shows/torrents
+      - ${HOTFLIX_DATA_DIR}/movies/torrents:/data/movies/torrents
     ports:
       - 8080:8080
       - 6881:6881
