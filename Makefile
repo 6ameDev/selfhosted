@@ -1,56 +1,66 @@
 MAKEFLAGS += --no-print-directory
 
 # Variables
-HOST_IP := $(shell hostname -I | cut -d ' ' -f1)
-UID := $(shell id -u)
-ENV_FILE := .env
-DEPLOYMENT_ENV_FILE := deploy.env
 APPS_DIR := src/apps
+ENV_DIR := src/env
+BASE_ENV := base.env
+DEPLOYMENT_ENV_FILE := deploy.env
 
 # Default target
 .PHONY: help
 help:
 	@echo "Available commands:"
-	@echo "  make deploy-tailscale          - Deploy tailscale stack"
 	@echo "  make deploy STACK=<stackname>  - Deploy a specific stack"
 
-# Create deploy.env file
+# Create deploy env
 create-env:
-	@echo "Creating deploy.env file..."
-	@cp $(ENV_FILE) $(DEPLOYMENT_ENV_FILE)
-	@echo "HOST_IP=$(HOST_IP)" >> $(DEPLOYMENT_ENV_FILE)
-	@echo "UID=$(UID)" >> $(DEPLOYMENT_ENV_FILE)
+	@if BASE_ENV_FILE="$(ENV_DIR)/$(BASE_ENV)"; [ ! -f "$$BASE_ENV_FILE" ]; then \
+		echo "Base .env file '$$BASE_ENV_FILE' not found!"; \
+		exit 1; \
+	else \
+		if STACK_ENV_FILE="$(ENV_DIR)/$(STACK).env"; [ -f "$$STACK_ENV_FILE" ]; then \
+			echo "Using merged .env file. Found: '$$STACK_ENV_FILE'"; \
+			cp "$$BASE_ENV_FILE" "$(DEPLOYMENT_ENV_FILE)"; \
+			echo "\n# Stack file env variables\n" >> "$(DEPLOYMENT_ENV_FILE)"; \
+			cat "$$STACK_ENV_FILE" >> "$(DEPLOYMENT_ENV_FILE)"; \
+		else \
+			echo "Using base .env file. Not Found: '$$STACK_ENV_FILE'"; \
+			cp "$$BASE_ENV_FILE" "$(DEPLOYMENT_ENV_FILE)"; \
+		fi \
+	fi
 
 # Clean up
 clean:
 	@echo "Cleaning up..."
 	@rm -f $(DEPLOYMENT_ENV_FILE)
 	@docker image prune -f
-	@docker system prune
+	@docker system prune -f
 
-# Deploy tailscale stack
-.PHONY: deploy-tailscale
-deploy-tailscale:
-	@make create-env
-	@echo "Deploying TailScale..."
-	@trap 'make clean' EXIT; \
-	docker compose -f src/tailscale/compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d
-
-# Deploy a specific stack
+# Deploy stack
 .PHONY: deploy
 deploy:
 	@if [ -z "$(STACK)" ]; then \
 		echo "Error: STACK parameter is required. Usage: make deploy STACK=<stackname>"; \
 		exit 1; \
 	fi
-	@if [ ! -f "$(APPS_DIR)/$(STACK)-compose.yaml" ]; then \
-		echo "Error: Compose file $(APPS_DIR)/$(STACK)-compose.yaml does not exist"; \
+	@if COMPOSE_FILE="$(APPS_DIR)/$(STACK)-compose.yaml"; [ ! -f "$$COMPOSE_FILE" ]; then \
+		echo "Error: Compose file $$COMPOSE_FILE does not exist"; \
 		exit 1; \
+	else \
+		make create-env; \
+		echo "Deploying $(STACK)"; \
+		trap 'make clean' EXIT; \
+		( \
+			docker compose -f $$COMPOSE_FILE --env-file $(DEPLOYMENT_ENV_FILE) pull && \
+			docker compose -f $$COMPOSE_FILE --env-file $(DEPLOYMENT_ENV_FILE) up -d \
+		) \
 	fi
-	@make create-env
-	@echo "Pulling & Deploying $(STACK) stack..."
+
+# Setup hotflix
+.PHONY: setup-hotflix
+setup-hotflix:
+	@echo "Creating deploy.env file..."
+	@cp $(BASE_ENV) $(DEPLOYMENT_ENV_FILE)
+	@cat src/env/hotflix.env >> $(DEPLOYMENT_ENV_FILE)
 	@trap 'make clean' EXIT; \
-	( \
-		docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) pull && \
-		docker compose -f $(APPS_DIR)/$(STACK)-compose.yaml --env-file $(DEPLOYMENT_ENV_FILE) up -d \
-	)
+	./src/init/hotflix.sh

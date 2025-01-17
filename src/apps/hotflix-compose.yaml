@@ -1,43 +1,66 @@
 name: hotflix
 
 services:
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
+
+  # Jellyfin (Tailscale Sidecar)
+
+  ts-jellyfin:
+    image: tailscale/tailscale:latest
+    container_name: ts-jellyfin
+    hostname: hotflix
     environment:
-      - PUID=${UID}
-      - PGID=13000
-      - UMASK=002
-      - TZ=${TIMEZONE}
-      - JELLYFIN_PublishedServerUrl=http://${HOST_IP}:8096
+      - TS_AUTHKEY=${TAILSCALE_AUTHKEY}?ephemeral=false
+      - "TS_EXTRA_ARGS=--advertise-tags=tag:container --reset"
+      - TS_SERVE_CONFIG=/config/ts-jellyfin.json
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
     volumes:
-      - ${APP_CONFIG_DIR}/jellyfin:/config
-      - ${MEDIA_ONE_DIR}/media:/media1:ro
-      - ${MEDIA_TWO_DIR}/media:/media2:ro
+      - ${APP_CONFIG_DIR}/ts-jellyfin/state:/var/lib/tailscale
+      - ./../configs:/config
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
     ports:
       - 8096:8096
       - 8920:8920
       - 7359:7359/udp
       - 1900:1900/udp
-    labels:
-      tsdproxy.enable: "true"
-      tsdproxy.name: "hotflix"
-      tsdproxy.ephemeral: "false"
-    networks:
-      - tailscale
     restart: unless-stopped
+    networks:
+      - tailcar
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    network_mode: service:ts-jellyfin
+    depends_on:
+      - ts-jellyfin
+    environment:
+      - PUID=13000
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+      - JELLYFIN_PublishedServerUrl=${JELLYFIN_SERVER_URL}
+    volumes:
+      - ${APP_CONFIG_DIR}/hotflix/jellyfin/config:/config
+      - ${HOTFLIX_DATA_DIR}/shows/media:/media/shows:ro
+      - ${HOTFLIX_DATA_DIR}/movies/media:/media/movies:ro
+    restart: unless-stopped
+
+  # Servarr Apps (Tailscale TSDProxy)
 
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     environment:
-      - PUID=13002
+      - PUID=13000
       - PGID=13000
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${APP_CONFIG_DIR}/radarr:/config
-      - ${MEDIA_ONE_DIR}:/media1
+      - ${APP_CONFIG_DIR}/hotflix/radarr:/config
+      - ${HOTFLIX_DATA_DIR}/movies:/data/movies
     ports:
       - 7878:7878
     labels:
@@ -45,20 +68,20 @@ services:
       tsdproxy.name: "movies"
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID=13001
+      - PUID=13000
       - PGID=13000
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${APP_CONFIG_DIR}/sonarr:/config
-      - ${MEDIA_TWO_DIR}:/media2
+      - ${APP_CONFIG_DIR}/hotflix/sonarr:/config
+      - ${HOTFLIX_DATA_DIR}/shows:/data/shows
     ports:
       - 8989:8989
     labels:
@@ -66,22 +89,22 @@ services:
       tsdproxy.name: "shows"
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
   qbittorrent:
     image: ghcr.io/hotio/qbittorrent:latest
     container_name: qbittorrent
     environment:
-      - PUID=13006
+      - PUID=13000
       - PGID=13000
       - UMASK=002
       - TZ=${TIMEZONE}
       - WEBUI_PORT=8080
     volumes:
-      - ${APP_CONFIG_DIR}/qbittorrent:/config
-      - ${MEDIA_ONE_DIR}/torrents:/media1/torrents
-      - ${MEDIA_TWO_DIR}/torrents:/media2/torrents
+      - ${APP_CONFIG_DIR}/hotflix/qbittorrent:/config
+      - ${HOTFLIX_DATA_DIR}/shows/torrents:/data/shows/torrents
+      - ${HOTFLIX_DATA_DIR}/movies/torrents:/data/movies/torrents
     ports:
       - 8080:8080
       - 6881:6881
@@ -89,21 +112,22 @@ services:
     labels:
       tsdproxy.enable: "true"
       tsdproxy.name: "qbit"
+      tsdproxy.container_port: 8080
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
     environment:
-      - PUID=13005
+      - PUID=13000
       - PGID=13000
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${APP_CONFIG_DIR}/prowlarr:/config
+      - ${APP_CONFIG_DIR}/hotflix/prowlarr:/config
     ports:
       - 9696:9696
     labels:
@@ -111,7 +135,7 @@ services:
       tsdproxy.name: "prowlarr"
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
   flaresolverr:
@@ -125,10 +149,12 @@ services:
     ports:
       - 8191:8191
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
 networks:
-  tailscale:
-    name: tailscale
+  tailcar:
+    name: tailcar
+  tailproxy:
+    name: tailproxy
     external: true
