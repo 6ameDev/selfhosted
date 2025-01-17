@@ -44,8 +44,8 @@ services:
       - JELLYFIN_PublishedServerUrl=${JELLYFIN_SERVER_URL}
     volumes:
       - ${APP_CONFIG_DIR}/hotflix/jellyfin/config:/config
-      - ${HOTFLIX_MEDIA_DIR}/shows:/media/shows:ro
-      - ${HOTFLIX_MEDIA_DIR}/movies:/media/movies:ro
+      - ${HOTFLIX_DATA_DIR}/shows/media:/media/shows:ro
+      - ${HOTFLIX_DATA_DIR}/movies/media:/media/movies:ro
     restart: unless-stopped
 
   # Servarr Apps (Tailscale TSDProxy)
@@ -71,38 +71,38 @@ services:
   #     - tailproxy
   #   restart: unless-stopped
 
-  # sonarr:
-  #   image: lscr.io/linuxserver/sonarr:latest
-  #   container_name: sonarr
-  #   environment:
-  #     - PUID=13001
-  #     - PGID=13000
-  #     - UMASK=002
-  #     - TZ=${TIMEZONE}
-  #   volumes:
-  #     - ${APP_CONFIG_DIR}/sonarr:/config
-  #     - ${MEDIA_TWO_DIR}:/media2
-  #   ports:
-  #     - 8989:8989
-  #   labels:
-  #     tsdproxy.enable: "true"
-  #     tsdproxy.name: "shows"
-  #     tsdproxy.ephemeral: "false"
-  #   networks:
-  #     - tailproxy
-  #   restart: unless-stopped
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=13000
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${APP_CONFIG_DIR}/hotflix/sonarr:/config
+      - ${HOTFLIX_DATA_DIR}/shows:/data
+    ports:
+      - 8989:8989
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "shows"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailproxy
+    restart: unless-stopped
 
   # qbittorrent:
   #   image: ghcr.io/hotio/qbittorrent:latest
   #   container_name: qbittorrent
   #   environment:
-  #     - PUID=13006
+  #     - PUID=13000
   #     - PGID=13000
   #     - UMASK=002
   #     - TZ=${TIMEZONE}
   #     - WEBUI_PORT=8080
   #   volumes:
-  #     - ${APP_CONFIG_DIR}/qbittorrent:/config
+  #     - ${APP_CONFIG_DIR}/hotflix/qbittorrent:/config
   #     - ${MEDIA_ONE_DIR}/torrents:/media1/torrents
   #     - ${MEDIA_TWO_DIR}/torrents:/media2/torrents
   #   ports:
