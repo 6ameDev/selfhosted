@@ -1,6 +1,9 @@
 name: hotflix
 
 services:
+
+  # Jellyfin (Tailscale Sidecar)
+
   ts-jellyfin:
     image: tailscale/tailscale:latest
     container_name: ts-jellyfin
@@ -44,6 +47,8 @@ services:
       - ${HOTFLIX_MEDIA_DIR}/shows:/media/shows:ro
       - ${HOTFLIX_MEDIA_DIR}/movies:/media/movies:ro
     restart: unless-stopped
+
+  # Servarr Apps (Tailscale TSDProxy)
 
   # radarr:
   #   image: lscr.io/linuxserver/radarr:latest
@@ -112,39 +117,39 @@ services:
   #     - tailscale
   #   restart: unless-stopped
 
-  # prowlarr:
-  #   image: lscr.io/linuxserver/prowlarr:latest
-  #   container_name: prowlarr
-  #   environment:
-  #     - PUID=13005
-  #     - PGID=13000
-  #     - UMASK=002
-  #     - TZ=${TIMEZONE}
-  #   volumes:
-  #     - ${APP_CONFIG_DIR}/prowlarr:/config
-  #   ports:
-  #     - 9696:9696
-  #   labels:
-  #     tsdproxy.enable: "true"
-  #     tsdproxy.name: "prowlarr"
-  #     tsdproxy.ephemeral: "false"
-  #   networks:
-  #     - tailscale
-  #   restart: unless-stopped
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=13000
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${APP_CONFIG_DIR}/prowlarr:/config
+    ports:
+      - 9696:9696
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "prowlarr"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailscale
+    restart: unless-stopped
 
-  # flaresolverr:
-  #   image: ghcr.io/flaresolverr/flaresolverr:latest
-  #   container_name: flaresolverr
-  #   environment:
-  #     - LOG_LEVEL=${LOG_LEVEL:-info}
-  #     - LOG_HTML=${LOG_HTML:-false}
-  #     - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-  #     - TZ=${TIMEZONE}
-  #   ports:
-  #     - 8191:8191
-  #   networks:
-  #     - tailscale
-  #   restart: unless-stopped
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=${TIMEZONE}
+    ports:
+      - 8191:8191
+    networks:
+      - tailscale
+    restart: unless-stopped
 
 networks:
   tailcar:
