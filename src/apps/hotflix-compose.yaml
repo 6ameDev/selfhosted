@@ -68,7 +68,7 @@ services:
   #     tsdproxy.name: "movies"
   #     tsdproxy.ephemeral: "false"
   #   networks:
-  #     - tailscale
+  #     - tailproxy
   #   restart: unless-stopped
 
   # sonarr:
@@ -89,7 +89,7 @@ services:
   #     tsdproxy.name: "shows"
   #     tsdproxy.ephemeral: "false"
   #   networks:
-  #     - tailscale
+  #     - tailproxy
   #   restart: unless-stopped
 
   # qbittorrent:
@@ -114,7 +114,7 @@ services:
   #     tsdproxy.name: "qbit"
   #     tsdproxy.ephemeral: "false"
   #   networks:
-  #     - tailscale
+  #     - tailproxy
   #   restart: unless-stopped
 
   prowlarr:
@@ -134,7 +134,7 @@ services:
       tsdproxy.name: "prowlarr"
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
   flaresolverr:
@@ -148,12 +148,12 @@ services:
     ports:
       - 8191:8191
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
 networks:
   tailcar:
     name: tailcar
-  tailscale:
-    name: tailscale
+  tailproxy:
+    name: tailproxy
     external: true
