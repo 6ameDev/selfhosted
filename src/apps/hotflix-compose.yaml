@@ -126,7 +126,7 @@ services:
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${APP_CONFIG_DIR}/prowlarr:/config
+      - ${APP_CONFIG_DIR}/hotflix/prowlarr:/config
     ports:
       - 9696:9696
     labels:
