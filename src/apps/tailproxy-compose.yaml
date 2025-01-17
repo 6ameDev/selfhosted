@@ -8,12 +8,12 @@ services:
       - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./config:/config
+      - ./../configs:/config
       - ${APP_CONFIG_DIR}/tsdproxy:/data
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
 networks:
-  tailscale:
-    name: tailscale
+  tailproxy:
+    name: tailproxy
