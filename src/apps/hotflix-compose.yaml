@@ -92,30 +92,30 @@ services:
       - tailproxy
     restart: unless-stopped
 
-  # qbittorrent:
-  #   image: ghcr.io/hotio/qbittorrent:latest
-  #   container_name: qbittorrent
-  #   environment:
-  #     - PUID=13000
-  #     - PGID=13000
-  #     - UMASK=002
-  #     - TZ=${TIMEZONE}
-  #     - WEBUI_PORT=8080
-  #   volumes:
-  #     - ${APP_CONFIG_DIR}/hotflix/qbittorrent:/config
-  #     - ${MEDIA_ONE_DIR}/torrents:/media1/torrents
-  #     - ${MEDIA_TWO_DIR}/torrents:/media2/torrents
-  #   ports:
-  #     - 8080:8080
-  #     - 6881:6881
-  #     - 6881:6881/udp
-  #   labels:
-  #     tsdproxy.enable: "true"
-  #     tsdproxy.name: "qbit"
-  #     tsdproxy.ephemeral: "false"
-  #   networks:
-  #     - tailproxy
-  #   restart: unless-stopped
+  qbittorrent:
+    image: ghcr.io/hotio/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=13000
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+      - WEBUI_PORT=8080
+    volumes:
+      - ${APP_CONFIG_DIR}/hotflix/qbittorrent:/config
+      - ${HOTFLIX_DATA_DIR}/shows/torrents:/torrents/shows
+      - ${HOTFLIX_DATA_DIR}/movies/torrents:/torrents/movies
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "qbit"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailproxy
+    restart: unless-stopped
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
