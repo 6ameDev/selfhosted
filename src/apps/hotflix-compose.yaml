@@ -50,26 +50,26 @@ services:
 
   # Servarr Apps (Tailscale TSDProxy)
 
-  # radarr:
-  #   image: lscr.io/linuxserver/radarr:latest
-  #   container_name: radarr
-  #   environment:
-  #     - PUID=13002
-  #     - PGID=13000
-  #     - UMASK=002
-  #     - TZ=${TIMEZONE}
-  #   volumes:
-  #     - ${APP_CONFIG_DIR}/radarr:/config
-  #     - ${MEDIA_ONE_DIR}:/media1
-  #   ports:
-  #     - 7878:7878
-  #   labels:
-  #     tsdproxy.enable: "true"
-  #     tsdproxy.name: "movies"
-  #     tsdproxy.ephemeral: "false"
-  #   networks:
-  #     - tailproxy
-  #   restart: unless-stopped
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=13000
+      - PGID=13000
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${APP_CONFIG_DIR}/hotflix/radarr:/config
+      - ${HOTFLIX_DATA_DIR}/movies:/data
+    ports:
+      - 7878:7878
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "movies"
+      tsdproxy.ephemeral: "false"
+    networks:
+      - tailproxy
+    restart: unless-stopped
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
