@@ -32,15 +32,15 @@ http://hotflix.home.lab {
     import macberry_backend 8096
 }
 
-http://sonarr.home.lab {
+http://shows.home.lab {
     import macberry_backend 8989
 }
 
-http://radarr.home.lab {
+http://movies.home.lab {
     import macberry_backend 7878
 }
 
-http://qbit.home.lab {
+http://torrent.home.lab {
     import macberry_backend 8080
 }
 
