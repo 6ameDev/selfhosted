@@ -1,0 +1,49 @@
+# -----------------
+# Reusable Snippets
+# -----------------
+
+# elderberry.local
+(elderberry_backend) {
+    reverse_proxy http://192.168.0.11:{args.0}
+}
+
+# macberry.local
+(macberry_backend) {
+    reverse_proxy http://192.168.0.13:{args.0}
+}
+
+# ----------------------
+# Reverse Proxy Backends
+# ----------------------
+
+# Elderberry Backends
+
+http://portainer.home.lab {
+    import elderberry_backend 9000
+}
+
+# Macberry Backends
+
+http://pihole.home.lab {
+    import macberry_backend 81
+}
+
+http://hotflix.home.lab {
+    import macberry_backend 8096
+}
+
+http://shows.home.lab {
+    import macberry_backend 8989
+}
+
+http://movies.home.lab {
+    import macberry_backend 7878
+}
+
+http://torrent.home.lab {
+    import macberry_backend 8080
+}
+
+http://prowlarr.home.lab {
+    import macberry_backend 9696
+}
