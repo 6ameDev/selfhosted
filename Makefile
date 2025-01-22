@@ -5,12 +5,20 @@ APPS_DIR := src/apps
 ENV_DIR := src/env
 BASE_ENV := base.env
 DEPLOYMENT_ENV_FILE := deploy.env
+# PATH_TO_SEARCH := ./src/apps
+FILENAME_PATTERN := *-compose.yaml
 
 # Default target
 .PHONY: help
 help:
 	@echo "Available commands:"
 	@echo "  make deploy STACK=<stackname>  - Deploy a specific stack"
+	@echo ""
+	@echo "Available stacks:"
+	@find $(APPS_DIR) -type f -name "$(FILENAME_PATTERN)" | \
+		awk -F'/' '{print $$NF}' | \
+		sed 's/-compose.yaml//g' | \
+		sort
 
 # Create deploy env
 create-env:
