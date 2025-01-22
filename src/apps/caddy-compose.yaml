@@ -5,7 +5,7 @@ services:
     image: caddy:2-alpine
     container_name: caddy
     volumes:
-      - ${APP_CONFIG_DIR}/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./../configs/Caddyfile:/etc/caddy/Caddyfile
       - ${APP_CONFIG_DIR}/caddy/srv:/srv
       - ${APP_CONFIG_DIR}/caddy/data:/data
       - ${APP_CONFIG_DIR}/caddy/config:/config
