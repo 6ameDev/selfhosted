@@ -24,7 +24,7 @@ services:
       tsdproxy.name: "changed"
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
   puppetbrowser:
@@ -44,7 +44,7 @@ services:
       - DEFAULT_STEALTH=true
       - DEFAULT_IGNORE_HTTPS_ERRORS=true
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
   apprise:
@@ -59,10 +59,10 @@ services:
     ports:
       - 8000:8000
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
 networks:
-  tailscale:
-    name: tailscale
+  tailproxy:
+    name: tailproxy
     external: true

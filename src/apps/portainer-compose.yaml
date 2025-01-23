@@ -22,10 +22,10 @@ services:
       tsdproxy.name: "portainer"
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: always
 
 networks:
-  tailscale:
-    name: tailscale
+  tailproxy:
+    name: tailproxy
     external: true

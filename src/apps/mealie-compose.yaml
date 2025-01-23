@@ -13,10 +13,10 @@ services:
       tsdproxy.name: "cook"
       tsdproxy.ephemeral: "false"
     networks:
-      - tailscale
+      - tailproxy
     restart: unless-stopped
 
 networks:
-  tailscale:
-    name: tailscale
+  tailproxy:
+    name: tailproxy
     external: true
