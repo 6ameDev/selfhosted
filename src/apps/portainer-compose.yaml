@@ -15,8 +15,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${APP_CONFIG_DIR}/portainer:/data
     ports:
-      - 8000:8000
-      - 9443:9443
+      - 9000:9000
     labels:
       tsdproxy.enable: "true"
       tsdproxy.name: "portainer"
