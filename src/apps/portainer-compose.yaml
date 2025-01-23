@@ -2,27 +2,21 @@ name: portainer
 
 services:
   portainer:
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:alpine
     container_name: portainer
     deploy:
       resources:
         limits:
           cpus: "0.75"
           memory: 256M
-        reservations:
-          cpus: "0.10"
-          memory: 128M
-    environment:
-      - PUID=13200
-      - PGID=13200
-      - UMASK=002
     security_opt:
       - no-new-privileges:true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${APP_CONFIG_DIR}/portainer:/data
     ports:
-      - 9000:9000
+      - 8000:8000
+      - 9443:9443
     labels:
       tsdproxy.enable: "true"
       tsdproxy.name: "portainer"
