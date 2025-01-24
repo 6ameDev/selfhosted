@@ -2,12 +2,17 @@
 # Reusable Snippets
 # -----------------
 
-# elderberry.local
-(elderberry_backend) {
-    reverse_proxy http://192.168.0.11:{args.0}
+# virtualberry
+(virtualberry_backend) {
+    reverse_proxy http://192.168.0.99:{args.0}
 }
 
-# macberry.local
+# acaiberry
+(acaiberry_backend) {
+    reverse_proxy http://192.168.0.12:{args.0}
+}
+
+# macberry
 (macberry_backend) {
     reverse_proxy http://192.168.0.13:{args.0}
 }
@@ -16,17 +21,19 @@
 # Reverse Proxy Backends
 # ----------------------
 
-# Elderberry Backends
+# Virtualberry Backends
+
+http://pihole.home.lab {
+    import virtualberry_backend 81
+}
+
+# Acaiberry Backends
 
 http://portainer.home.lab {
-    import elderberry_backend 9000
+    import acaiberry_backend 9000
 }
 
 # Macberry Backends
-
-http://pihole.home.lab {
-    import macberry_backend 81
-}
 
 http://hotflix.home.lab {
     import macberry_backend 8096
