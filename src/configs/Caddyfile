@@ -33,6 +33,10 @@ http://portainer.home.lab {
     import acaiberry_backend 9000
 }
 
+http://monitor.home.lab {
+    import acaiberry_backend 8090
+}
+
 # Macberry Backends
 
 http://hotflix.home.lab {

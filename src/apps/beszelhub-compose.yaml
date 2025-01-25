@@ -1,6 +1,17 @@
 name: beszel
-
+  
 services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ${APP_CONFIG_DIR}/beszel:/beszel_data
+    ports:
+      - 8090:8090
+    restart: unless-stopped
+
   beszel-agent:
     image: henrygd/beszel-agent:latest
     container_name: beszel-agent
@@ -10,6 +21,4 @@ services:
       KEY: "${BESZEL_KEY}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /srv/hotflix/shows:/extra-filesystems/sdc1:ro
-      - /srv/hotflix/movies:/extra-filesystems/sdd2:ro
     restart: unless-stopped
