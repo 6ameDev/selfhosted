@@ -4,8 +4,7 @@ services:
   beszel:
     image: henrygd/beszel:latest
     container_name: beszel
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    network_mode: host
     volumes:
       - ${APP_CONFIG_DIR}/beszel:/beszel_data
     ports:
