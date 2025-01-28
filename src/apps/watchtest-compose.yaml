@@ -1,7 +1,0 @@
-name: watchtest
-
-services:
-  watchtest:
-    image: ghcr.io/6amedev/watchtower-test:latest
-    container_name: watchtest
-    restart: unless-stopped

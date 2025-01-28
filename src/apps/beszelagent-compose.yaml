@@ -12,4 +12,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /srv/hotflix/shows:/extra-filesystems/sdc1:ro
       - /srv/hotflix/movies:/extra-filesystems/sdd2:ro
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped

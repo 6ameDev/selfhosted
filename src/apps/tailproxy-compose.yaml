@@ -13,7 +13,7 @@ services:
     networks:
       - tailproxy
     labels:
-      com.centurylinklabs.watchtower.enable: "false"
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
 
 networks:

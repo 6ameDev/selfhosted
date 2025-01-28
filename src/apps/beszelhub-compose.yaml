@@ -10,7 +10,7 @@ services:
     ports:
       - 8090:8090
     labels:
-      com.centurylinklabs.watchtower.enable: "false"
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
 
   beszel-agent:
@@ -23,5 +23,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
-      com.centurylinklabs.watchtower.enable: "false"
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
