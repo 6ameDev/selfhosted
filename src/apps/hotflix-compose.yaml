@@ -26,6 +26,8 @@ services:
       - 8920:8920
       - 7359:7359/udp
       - 1900:1900/udp
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
     networks:
       - tailcar
@@ -46,6 +48,8 @@ services:
       - ${APP_CONFIG_DIR}/hotflix/jellyfin/config:/config
       - ${HOTFLIX_DATA_DIR}/shows/media:/media/shows:ro
       - ${HOTFLIX_DATA_DIR}/movies/media:/media/movies:ro
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
 
   # Servarr Apps (Tailscale TSDProxy)
