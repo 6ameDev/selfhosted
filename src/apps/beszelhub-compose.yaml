@@ -4,13 +4,14 @@ services:
   beszel:
     image: henrygd/beszel:latest
     container_name: beszel
-    network_mode: host
     volumes:
       - ${APP_CONFIG_DIR}/beszel:/beszel_data
     ports:
       - 8090:8090
     labels:
       com.centurylinklabs.watchtower.monitor-only: "true"
+    networks:
+      - tailproxy
     restart: unless-stopped
 
   beszel-agent:
@@ -25,3 +26,8 @@ services:
     labels:
       com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
+
+networks:
+  tailproxy:
+    name: tailproxy
+    external: true
