@@ -9,6 +9,8 @@ services:
       - ${APP_CONFIG_DIR}/beszel:/beszel_data
     ports:
       - 8090:8090
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
     restart: unless-stopped
 
   beszel-agent:
@@ -20,4 +22,6 @@ services:
       KEY: "${BESZEL_KEY}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
     restart: unless-stopped

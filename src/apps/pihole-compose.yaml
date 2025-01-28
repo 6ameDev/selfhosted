@@ -15,5 +15,5 @@ services:
       - "53:53/udp"
       - "81:80/tcp"
     labels:
-      com.centurylinklabs.watchtower.monitor-only: "true"
+      com.centurylinklabs.watchtower.enable: "false"
     restart: unless-stopped

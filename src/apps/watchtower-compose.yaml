@@ -23,6 +23,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - watchnet
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
     restart: unless-stopped
 
   # macwatch:
