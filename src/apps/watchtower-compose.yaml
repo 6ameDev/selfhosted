@@ -9,7 +9,7 @@ services:
       - WATCHTOWER_DEBUG=true
       # - WATCHTOWER_MONITOR_ONLY=true
       # Labels: com.centurylinklabs.watchtower.enable [Boolean], com.centurylinklabs.watchtower.monitor-only [Boolean]
-      - WATCHTOWER_LABEL_ENABLE=true
+      # - WATCHTOWER_LABEL_ENABLE=true
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_POLL_INTERVAL=30
       # - WATCHTOWER_SCHEDULE=0 0 * * *  # Run once a day at midnight
