@@ -13,12 +13,12 @@ services:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_POLL_INTERVAL=30
       # - WATCHTOWER_SCHEDULE=0 0 * * *  # Run once a day at midnight
-      # - WATCHTOWER_REMOVE_VOLUMES=true
-      # - WATCHTOWER_INCLUDE_STOPPED=false
-      # - WATCHTOWER_REVIVE_STOPPED=false
-      # - WATCHTOWER_NOTIFICATIONS=shoutrrr
-      # - WATCHTOWER_NOTIFICATION_URL=discord://TOKEN@WEBHOOKID
-      # - WATCHTOWER_ROLLING_RESTART=true
+      - WATCHTOWER_REMOVE_VOLUMES=true
+      - WATCHTOWER_INCLUDE_STOPPED=false
+      - WATCHTOWER_REVIVE_STOPPED=false
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${NOTIFICATION_URL}
+      - WATCHTOWER_ROLLING_RESTART=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
