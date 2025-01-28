@@ -5,5 +5,5 @@ services:
     image: ghcr.io/6amedev/watchtower-test:latest
     container_name: watchtest
     labels:
-      com.centurylinklabs.watchtower.monitor-only: "true"
+      # com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
