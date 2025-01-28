@@ -39,6 +39,10 @@ http://monitor.home.lab {
 
 # Macberry Backends
 
+http://changed.home.lab {
+    import macberry_backend 5000
+}
+
 http://hotflix.home.lab {
     import macberry_backend 8096
 }

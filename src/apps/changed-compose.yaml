@@ -47,21 +47,6 @@ services:
       - tailproxy
     restart: unless-stopped
 
-  # apprise:
-  #   image: lscr.io/linuxserver/apprise-api:latest
-  #   container_name: changed_apprise
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=${TIMEZONE}
-  #   volumes:
-  #     - ${APP_CONFIG_DIR}/apprise:/config
-  #   ports:
-  #     - 8000:8000
-  #   networks:
-  #     - tailproxy
-  #   restart: unless-stopped
-
 networks:
   tailproxy:
     name: tailproxy
