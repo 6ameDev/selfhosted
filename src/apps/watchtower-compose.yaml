@@ -1,9 +1,9 @@
 name: watchtower
 
 services:
-  acaiwatch:
+  watchacai:
     image: containrrr/watchtower:latest
-    container_name: acaiwatch
+    container_name: watchacai
     environment:
       - TZ=${TIMEZONE}
       - WATCHTOWER_CLEANUP=true
@@ -22,22 +22,25 @@ services:
       com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
 
-  # macwatch:
-  #   image: containrrr/watchtower:latest
-  #   container_name: macwatch
-  #   environment:
-  #     - WATCHTOWER_SCHEDULE=0 0 * * *  # Run once a day at midnight
-  #     - WATCHTOWER_NOTIFICATION_DISCORD_WEBHOOK=https://discord.com/api/webhooks/<your_webhook_id>
-  #     - WATCHTOWER_NOTIFICATIONS=shoutrrr
-  #   command:
-  #     - --host=tcp://192.168.1.2:2375     # Connect to remote Docker daemon
-  #     - --cleanup                         # Remove old images after updates
-  #     - --include-restarting              # Include restarting containers
-  #     - --label-enable                    # Enable label-based filtering
-  #     - --no-restart-on-failure           # Do not restart failed updates
-  #   networks:
-  #     - watchnet
-  #   restart: unless-stopped
+  watchmac:
+    image: containrrr/watchtower:latest
+    container_name: watchmac
+    environment:
+      - TZ=${TIMEZONE}
+      - DOCKER_HOST=${REMOTE_HOST}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=47 0,12 * * *
+      - WATCHTOWER_REMOVE_VOLUMES=true
+      - WATCHTOWER_INCLUDE_STOPPED=false
+      - WATCHTOWER_REVIVE_STOPPED=false
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${NOTIFICATION_URL}
+      - WATCHTOWER_ROLLING_RESTART=true
+    networks:
+      - watchnet
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
+    restart: unless-stopped
 
 networks:
   watchnet:
