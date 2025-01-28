@@ -12,6 +12,8 @@ services:
       - ${APP_CONFIG_DIR}/tsdproxy:/data
     networks:
       - tailproxy
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
 
 networks:

@@ -1,0 +1,27 @@
+name: watchtower
+
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    environment:
+      - TZ=${TIMEZONE}
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=47 0,12 * * *
+      - WATCHTOWER_REMOVE_VOLUMES=true
+      - WATCHTOWER_INCLUDE_STOPPED=false
+      - WATCHTOWER_REVIVE_STOPPED=false
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=${NOTIFICATION_URL}
+      - WATCHTOWER_ROLLING_RESTART=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - watchnet
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
+    restart: unless-stopped
+
+networks:
+  watchnet:
+    name: watchnet

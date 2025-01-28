@@ -12,4 +12,6 @@ services:
     ports:
       - 80:80
       - 443:443
+    labels:
+      com.centurylinklabs.watchtower.monitor-only: "true"
     restart: unless-stopped
