@@ -9,6 +9,9 @@ services:
     ports:
       - 8090:8090
     labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "monitor"
+      tsdproxy.ephemeral: "false"
       com.centurylinklabs.watchtower.monitor-only: "true"
     networks:
       - tailproxy
