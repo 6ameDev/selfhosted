@@ -20,6 +20,7 @@ services:
       tsdproxy.enable: "true"
       tsdproxy.name: "portainer"
       tsdproxy.ephemeral: "false"
+      com.centurylinklabs.watchtower.enable: "true"
     networks:
       - tailproxy
     restart: always
