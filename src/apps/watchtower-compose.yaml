@@ -1,9 +1,9 @@
 name: watchtower
 
 services:
-  watchacai:
+  watchtower:
     image: containrrr/watchtower:latest
-    container_name: watchacai
+    container_name: watchtower
     environment:
       - TZ=${TIMEZONE}
       - WATCHTOWER_CLEANUP=true
@@ -16,26 +16,6 @@ services:
       - WATCHTOWER_ROLLING_RESTART=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - watchnet
-    labels:
-      com.centurylinklabs.watchtower.monitor-only: "true"
-    restart: unless-stopped
-
-  watchmac:
-    image: containrrr/watchtower:latest
-    container_name: watchmac
-    environment:
-      - TZ=${TIMEZONE}
-      - DOCKER_HOST=${REMOTE_HOST}
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_SCHEDULE=47 0,12 * * *
-      - WATCHTOWER_REMOVE_VOLUMES=true
-      - WATCHTOWER_INCLUDE_STOPPED=false
-      - WATCHTOWER_REVIVE_STOPPED=false
-      - WATCHTOWER_NOTIFICATIONS=shoutrrr
-      - WATCHTOWER_NOTIFICATION_URL=${NOTIFICATION_URL}
-      - WATCHTOWER_ROLLING_RESTART=true
     networks:
       - watchnet
     labels:
