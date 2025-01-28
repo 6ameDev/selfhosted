@@ -7,7 +7,7 @@ services:
     environment:
       - TZ=${TIMEZONE}
       - WATCHTOWER_DEBUG=true
-      - WATCHTOWER_MONITOR_ONLY=true
+      # - WATCHTOWER_MONITOR_ONLY=true
       # Labels: com.centurylinklabs.watchtower.enable [Boolean], com.centurylinklabs.watchtower.monitor-only [Boolean]
       - WATCHTOWER_LABEL_ENABLE=true
       - WATCHTOWER_CLEANUP=true
