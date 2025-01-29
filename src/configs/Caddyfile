@@ -37,6 +37,10 @@ http://monitor.home.lab {
     import acaiberry_backend 8090
 }
 
+http://cook.home.lab {
+    import acaiberry_backend 9001
+}
+
 # Macberry Backends
 
 http://changed.home.lab {
