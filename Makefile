@@ -12,6 +12,7 @@ FILENAME_PATTERN := *-compose.yaml
 .PHONY: help
 help:
 	@echo "Available commands:"
+	@echo "  make ls"
 	@echo "  make deploy STACK=<stackname>  - Deploy a specific stack"
 	@echo ""
 	@echo "Available stacks:"
@@ -19,6 +20,11 @@ help:
 		awk -F'/' '{print $$NF}' | \
 		sed 's/-compose.yaml//g' | \
 		sort
+
+# List running stacks
+.PHONY: ls
+ls:
+	@docker ps --format '{{.Label "com.docker.compose.project"}}'
 
 # Create deploy env
 create-env:
