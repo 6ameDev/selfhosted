@@ -10,6 +10,8 @@ services:
     environment:
       - RECIPYA_SERVER_IS_PROD=true
       - RECIPYA_SERVER_PORT=8078
+      - RECIPYA_SERVER_AUTOLOGIN=true
+      - RECIPYA_SERVER_NO_SIGNUPS=true
     labels:
       tsdproxy.enable: "true"
       tsdproxy.name: "cook"
