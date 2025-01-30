@@ -11,6 +11,10 @@ services:
     environment:
       - OLLAMA_BASE_URL=${OLLAMA_URL}
       - WEBUI_SECRET_KEY=${SECRET_KEY}
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "chat"
+      tsdproxy.ephemeral: "false"
     networks:
       - skynet
     restart: unless-stopped

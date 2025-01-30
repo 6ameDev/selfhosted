@@ -43,6 +43,10 @@ http://cook.home.lab {
 
 # Macberry Backends
 
+http://chat.home.lab {
+    import macberry_backend 8082
+}
+
 http://changed.home.lab {
     import macberry_backend 5000
 }
