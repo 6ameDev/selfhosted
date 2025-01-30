@@ -24,7 +24,7 @@ help:
 # List running stacks
 .PHONY: ls
 ls:
-	@docker ps --format '{{.Label "com.docker.compose.project"}}'
+	@docker ps --format '{{.Label "com.docker.compose.project"}}' | sort -u
 
 # Create deploy env
 create-env:
