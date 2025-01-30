@@ -37,6 +37,10 @@ http://monitor.home.lab {
     import acaiberry_backend 8090
 }
 
+http://pairdrop.home.lab {
+    import acaiberry_backend 3000
+}
+
 http://cook.home.lab {
     import acaiberry_backend 8078
 }

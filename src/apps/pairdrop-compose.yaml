@@ -6,11 +6,15 @@ services:
     container_name: pairdrop
     environment:
       - TZ=${TIMEZONE}
-      - RATE_LIMIT=true
+      - RATE_LIMIT=false
       - WS_FALLBACK=true
     ports:
       - 3000:3000
     tmpfs:
       - /run:exec
     read_only: true
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "pairdrop"
+      tsdproxy.ephemeral: "false"
     restart: unless-stopped
