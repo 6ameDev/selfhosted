@@ -1,0 +1,11 @@
+name: museek
+
+services:
+  museek:
+    image: ghcr.io/6amedev/museek:main
+    container_name: museek
+    volumes:
+      - ${APP_CONFIG_DIR}/museek:/museek_data
+    ports:
+      - "8020:8090"
+    restart: unless-stopped
