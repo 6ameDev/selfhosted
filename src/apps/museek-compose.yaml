@@ -6,6 +6,18 @@ services:
     container_name: museek
     volumes:
       - ${APP_CONFIG_DIR}/museek:/museek_data
+    labels:
+      tsdproxy.enable: "true"
+      tsdproxy.name: "museek"
+      tsdproxy.ephemeral: "false"
+      com.centurylinklabs.watchtower.enable: "false"
     ports:
       - "8020:8090"
+    networks:
+      - tailproxy
     restart: unless-stopped
+
+networks:
+  tailproxy:
+    name: tailproxy
+    external: true
