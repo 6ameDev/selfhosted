@@ -4,6 +4,8 @@ services:
   museek:
     image: ghcr.io/6amedev/museek:main
     container_name: museek
+    environment:
+      - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
     volumes:
       - ${APP_CONFIG_DIR}/museek:/museek_data
     labels:
