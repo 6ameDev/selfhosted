@@ -6,6 +6,7 @@ services:
     container_name: museek
     environment:
       - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+      - AIOTUBE_HOST=http://aiotube:8000
     volumes:
       - ${APP_CONFIG_DIR}/museek:/museek_data
     labels:
@@ -15,6 +16,15 @@ services:
       com.centurylinklabs.watchtower.enable: "false"
     ports:
       - "8020:8090"
+    networks:
+      - tailproxy
+    restart: unless-stopped
+
+  aiotube:
+    image: ghcr.io/6amedev/aiotube:videos-metadata
+    container_name: aiotube
+    ports:
+      - "8000:8000"
     networks:
       - tailproxy
     restart: unless-stopped
