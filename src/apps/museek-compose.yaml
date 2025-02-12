@@ -6,6 +6,9 @@ services:
     container_name: museek
     environment:
       - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+      - SPOTIFY_REDIRECT_URI=${SPOTIFY_REDIRECT_URI}
       - AIOTUBE_HOST=http://aiotube:8000
     volumes:
       - ${APP_CONFIG_DIR}/museek:/museek_data
