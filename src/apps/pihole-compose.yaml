@@ -2,7 +2,7 @@ name: pihole
 
 services:
   pihole:
-    image: pihole/pihole:latest
+    image: pihole/pihole:2024.07.0
     container_name: pihole
     environment:
       - TZ=${TIMEZONE}
