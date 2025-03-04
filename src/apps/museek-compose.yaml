@@ -5,11 +5,12 @@ services:
     image: ghcr.io/6amedev/museek:main
     container_name: museek
     environment:
+      - AIOTUBE_HOST=http://aiotube:8000
+      - SEEKER_HOST=http://seeker:8000
       - YOUTUBE_API_KEY=${YOUTUBE_API_KEY}
       - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
       - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
       - SPOTIFY_REDIRECT_URI=${SPOTIFY_REDIRECT_URI}
-      - AIOTUBE_HOST=http://aiotube:8000
       - PLAYLISTS_IMAGE_URL=${PLAYLISTS_IMAGE_URL}
       - SAVED_TRACKS_IMAGE_URL=${SAVED_TRACKS_IMAGE_URL}
     volumes:
@@ -21,6 +22,17 @@ services:
       com.centurylinklabs.watchtower.enable: "false"
     ports:
       - "8020:8090"
+    networks:
+      - tailproxy
+    restart: unless-stopped
+
+  seeker:
+    image: ghcr.io/6amedev/seeker:main
+    container_name: seeker
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+    ports:
+      - "8001:8000"
     networks:
       - tailproxy
     restart: unless-stopped
