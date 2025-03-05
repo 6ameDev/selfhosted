@@ -11,6 +11,8 @@ services:
       # - TS_SERVE_CONFIG=/config/ts-exitnode.json
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=false
+    network_mode: "host"
+    privileged: true
     volumes:
       - ${APP_CONFIG_DIR}/ts-exitnode/state:/var/lib/tailscale
       # - ./../configs:/config
@@ -21,9 +23,3 @@ services:
     labels:
       com.centurylinklabs.watchtower.enable: "false"
     restart: unless-stopped
-    networks:
-      - exitnode
-
-networks:
-  exitnode:
-    name: exitnode
