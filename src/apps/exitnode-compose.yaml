@@ -7,7 +7,7 @@ services:
     hostname: acainode
     environment:
       - TS_AUTHKEY=${TAILSCALE_AUTHKEY}?ephemeral=false
-      - "TS_EXTRA_ARGS=--advertise-tags=tag:container --reset"
+      - "TS_EXTRA_ARGS=--advertise-exit-node --advertise-tags=tag:container --reset"
       # - TS_SERVE_CONFIG=/config/ts-exitnode.json
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_USERSPACE=false
