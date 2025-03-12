@@ -5,6 +5,8 @@ services:
     image: ghcr.io/6amedev/museek:main
     container_name: museek
     environment:
+      - ENV=production
+      - APP_URL=http://museek.home.lab
       - SEEKER_HOST=http://seeker:8000
       - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
       - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
