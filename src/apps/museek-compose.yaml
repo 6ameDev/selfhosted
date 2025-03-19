@@ -32,6 +32,8 @@ services:
       com.centurylinklabs.watchtower.enable: "false"
     ports:
       - "11211:11211"
+    networks:
+      - tailproxy
     restart: unless-stopped
 
   seeker:
