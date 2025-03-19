@@ -6,6 +6,7 @@ services:
     container_name: museek
     environment:
       - ENV=production
+      - MEMCACHE_ADDR=mucache:11211
       - APP_URL=http://museek.home.lab
       - SEEKER_HOST=http://seeker:8000
       - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
@@ -22,6 +23,15 @@ services:
       - "8020:8090"
     networks:
       - tailproxy
+    restart: unless-stopped
+
+  mucache:
+    image: memcached:1.6-alpine
+    container_name: mucache
+    labels:
+      com.centurylinklabs.watchtower.enable: "false"
+    ports:
+      - "11211:11211"
     restart: unless-stopped
 
   seeker:
