@@ -37,10 +37,8 @@ services:
     restart: unless-stopped
 
   seeker:
-    image: ghcr.io/6amedev/seeker:main
+    image: ghcr.io/ragazero/seeker:latest
     container_name: seeker
-    labels:
-      com.centurylinklabs.watchtower.enable: "false"
     ports:
       - "8001:8000"
     networks:
