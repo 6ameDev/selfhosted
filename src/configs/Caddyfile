@@ -49,6 +49,26 @@ http://cook.home.lab {
     import acaiberry_backend 8078
 }
 
+http://hotflix.home.lab {
+    import acaiberry_backend 8096
+}
+
+http://shows.home.lab {
+    import acaiberry_backend 8989
+}
+
+http://movies.home.lab {
+    import acaiberry_backend 7878
+}
+
+http://torrent.home.lab {
+    import acaiberry_backend 8080
+}
+
+http://prowlarr.home.lab {
+    import acaiberry_backend 9696
+}
+
 # Macberry Backends
 
 http://chat.home.lab {
@@ -57,24 +77,4 @@ http://chat.home.lab {
 
 http://changed.home.lab {
     import macberry_backend 5000
-}
-
-http://hotflix.home.lab {
-    import macberry_backend 8096
-}
-
-http://shows.home.lab {
-    import macberry_backend 8989
-}
-
-http://movies.home.lab {
-    import macberry_backend 7878
-}
-
-http://torrent.home.lab {
-    import macberry_backend 8080
-}
-
-http://prowlarr.home.lab {
-    import macberry_backend 9696
 }
