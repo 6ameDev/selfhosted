@@ -2,42 +2,9 @@ name: hotflix
 
 services:
 
-  # Jellyfin (Tailscale Sidecar)
-
-  ts-jellyfin:
-    image: tailscale/tailscale:latest
-    container_name: ts-jellyfin
-    hostname: hotflix
-    environment:
-      - TS_AUTHKEY=${TAILSCALE_AUTHKEY}?ephemeral=false
-      - "TS_EXTRA_ARGS=--advertise-tags=tag:container --reset"
-      - TS_SERVE_CONFIG=/config/ts-jellyfin.json
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_USERSPACE=false
-    volumes:
-      - ${APP_CONFIG_DIR}/ts-jellyfin/state:/var/lib/tailscale
-      - ./../configs:/config
-      - /dev/net/tun:/dev/net/tun
-    cap_add:
-      - net_admin
-      - sys_module
-    ports:
-      - 8096:8096
-      - 8920:8920
-      - 7359:7359/udp
-      - 1900:1900/udp
-    labels:
-      com.centurylinklabs.watchtower.enable: "false"
-    restart: unless-stopped
-    networks:
-      - tailcar
-
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
-    network_mode: service:ts-jellyfin
-    depends_on:
-      - ts-jellyfin
     environment:
       - PUID=13000
       - PGID=13000
@@ -48,6 +15,8 @@ services:
       - ${APP_CONFIG_DIR}/hotflix/jellyfin/config:/config
       - ${HOTFLIX_DATA_DIR}/shows/media:/media/shows:ro
       - ${HOTFLIX_DATA_DIR}/movies/media:/media/movies:ro
+    ports:
+      - 8096:8096
     labels:
       com.centurylinklabs.watchtower.enable: "false"
     restart: unless-stopped
