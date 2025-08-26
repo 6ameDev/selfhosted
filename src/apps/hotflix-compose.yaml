@@ -66,7 +66,7 @@ services:
     restart: unless-stopped
 
   qbittorrent:
-    image: ghcr.io/hotio/qbittorrent:latest
+    image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     environment:
       - PUID=13000
@@ -74,6 +74,7 @@ services:
       - UMASK=002
       - TZ=${TIMEZONE}
       - WEBUI_PORT=8080
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
     volumes:
       - ${APP_CONFIG_DIR}/hotflix/qbittorrent:/config
       - ${HOTFLIX_DATA_DIR}/shows/torrents:/data/shows/torrents
