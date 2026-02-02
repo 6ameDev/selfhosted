@@ -49,6 +49,10 @@ http://cook.home.lab {
     import acaiberry_backend 8078
 }
 
+http://folio.home.lab {
+    import acaiberry_backend 8088
+}
+
 http://hotflix.home.lab {
     import acaiberry_backend 8096
 }
