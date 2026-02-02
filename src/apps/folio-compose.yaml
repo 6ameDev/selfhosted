@@ -1,0 +1,18 @@
+name: folio
+
+services:
+
+  wealthfolio:
+    image: afadil/wealthfolio:latest
+    container_name: wealthfolio
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    environment:
+      WF_LISTEN_ADDR: 0.0.0.0:8088
+      WF_DB_PATH: /data/wealthfolio.db
+      WF_SECRET_KEY: ${WF_SECRET_KEY}
+      WF_AUTH_PASSWORD_HASH: ${WF_AUTH_PASSWORD_HASH}
+      WF_AUTH_TOKEN_TTL_MINUTES: ${WF_AUTH_TOKEN_TTL_MINUTES}
+    volumes:
+      - ${APP_CONFIG_DIR}/wealthfolio/data:/data
