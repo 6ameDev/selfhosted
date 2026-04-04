@@ -3,7 +3,7 @@ name: folio
 services:
 
   wealthfolio:
-    image: afadil/wealthfolio:latest
+    image: afadil/wealthfolio:3.1
     container_name: wealthfolio
     restart: unless-stopped
     ports:
